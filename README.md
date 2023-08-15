@@ -1,2 +1,3 @@
-# cpp_collection
-collection of my cpp boilerplate
+# cpp collection
+collection of my cpp boilerplate code
+
