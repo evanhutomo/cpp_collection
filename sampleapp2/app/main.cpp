@@ -3,13 +3,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
-#include "sambel.h"
-#include "lat1.h"
-#include "lat2.h"
+#include "../inc/sambel.h"
+#include "../inc/lat1.h"
+#include "../inc/lat2.h"
 
 int main()
 {
-#if 1
+#if 0
     std::system("cat ../LICENSE");
     auto sambelbawang = Sambel();
     sambelbawang.createSambel(10, true);

@@ -5,7 +5,7 @@ project(CPP_BOILERPLATE VERSION 0.0.1 LANGUAGES CXX)
 #                                  Locate files
 # --------------------------------------------------------------------------------
 set(SOURCES 
-  src/sambel.cpp
+  # src/sambel.cpp
   src/lat1.cpp
   src/lat2.cpp  
 )
@@ -14,7 +14,7 @@ set(LIBRARY_NAME sambelProject)  # Default name for the library built from src/*
 
 # Debugging purpose
 set(CMAKE_BUILD_TYPE Debug)
-# add_definitions(-DDEBUG)
+add_definitions(-DDEBUG)
 # --------------------------------------------------------------------------------
 #                                     Build
 # --------------------------------------------------------------------------------
