@@ -10,6 +10,9 @@ set(SOURCES
   src/lat2.cpp  
 )
 
+# Learn how to add examples and its option from roots
+# option(BUILD_NUMCPP_EXAMPLES "Build NumCpp examples" ON)
+
 set(LIBRARY_NAME sambelProject)  # Default name for the library built from src/*.cpp
 
 # Debugging purpose
@@ -25,6 +28,7 @@ set(EIGEN3_INCLUDE_DIR "/opt/vcpkg/packages/eigen3_x64-linux/include")
 add_library(${LIBRARY_NAME} OBJECT ${SOURCES})
 
 # Lib needs to see header files, and library users must also able to see (PUBLIC)
+message(STATUS "Variable value: ${PROJECT_SOURCE_DIR}")
 target_include_directories(${LIBRARY_NAME} 
   PUBLIC ${PROJECT_SOURCE_DIR}/inc
   PUBLIC ${EIGEN3_INCLUDE_DIR}

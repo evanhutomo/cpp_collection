@@ -28,12 +28,11 @@ int main()
 
 #if 1
     // lat 2
-    Eigen::MatrixXd input(2, 10); // Example input matrix
-    input << 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-             11, 12, 13, 14, 15, 16, 17, 18, 19, 20;
+    Eigen::MatrixXd input(1, 10); // Example input matrix
+    input << 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
 
-    int frame_length = 4;
-    int hop_length = 2;
+    int frame_length = 3;
+    int hop_length = 1;
 
     try {   
         auto b = std::make_unique<LATCPP::BASIC2::Latihan2>();     

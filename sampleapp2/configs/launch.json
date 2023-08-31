@@ -6,14 +6,16 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/sambel",
-            "args": [],
+			"args": [
+				/* give absolute path using variable workspaceFolder above if needed */
+			],
             "stopAtEntry": false,
             "externalConsole": false,
             // "preLaunchTask": "build",
             "cwd": "${workspaceFolder}/",
             "environment": [],
             "MIMode": "gdb",
-            "miDebuggerPath": "/usr/bin/gdb", // Replace with the path to your GDB executable if necessary10
+            "miDebuggerPath": "/usr/bin/gdb", // Replace with the path to your GDB executable if necessary
             "linux": {
                 "program": "${workspaceFolder}/build/sambel"
             }            

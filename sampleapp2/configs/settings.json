@@ -11,6 +11,7 @@
         "-DCMAKE_TOOLCHAIN_FILE=/opt/vcpkg/scripts/buildsystems/vcpkg.cmake"
     ],
     "cmake.buildArgs": [
-        
-    ]
+        "-j4",
+    ],
+	// "cmake.sourceDirectory": "/* add root path of the codebase */" 
 }
