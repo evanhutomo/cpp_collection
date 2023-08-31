@@ -9,13 +9,14 @@
 
 int main()
 {
-#if 0
+#if 1
     std::system("cat ../LICENSE");
-    auto sambelbawang = Sambel();
-    sambelbawang.createSambel(10, true);
-    sambelbawang.sajikanSambel(sambelbawang.getSambel());
+    auto sambelbawang = std::make_unique<Sambel>(); 
+    sambelbawang->createSambel(10, true);
+    sambelbawang->sajikanSambel(sambelbawang->getSambel());
+#endif
 
-
+#if 1
     // lat1
     std::wstring japstr = L"穫トぞすな域応選こーがク究8生ニソサラ現手ス消団メタカ気今げへっ関航稿マ里非メヲ済欧ぽ政道ツ何産禁リぞす要調浅添さぼリ。";
     std::wstring engstr = L"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eleifend dui sem, id sodales sapien fringilla quis.";
@@ -24,9 +25,10 @@ int main()
     a->getWindowsPath();
     a->getExecutablePath();
     a->t_strcopy({1,2,3,4});
+    a->tryMap1();
 #endif    
 
-#if 1
+#if 0
     // lat 2
     Eigen::MatrixXd input(1, 10); // Example input matrix
     input << 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;

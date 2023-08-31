@@ -5,7 +5,7 @@ project(CPP_BOILERPLATE VERSION 0.0.1 LANGUAGES CXX)
 #                                  Locate files
 # --------------------------------------------------------------------------------
 set(SOURCES 
-  # src/sambel.cpp
+  src/sambel.cpp
   src/lat1.cpp
   src/lat2.cpp  
 )

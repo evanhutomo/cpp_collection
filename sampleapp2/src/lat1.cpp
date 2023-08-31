@@ -5,6 +5,9 @@
 #include <codecvt>  // for std::codecvt_utf8
 #include <array>
 #include <cstring>
+#include <iostream>
+#include <map>
+#include <string>
 
 namespace LATCPP::BASIC1 {
     Latihan1::Latihan1(){}
@@ -65,5 +68,15 @@ namespace LATCPP::BASIC1 {
 
         std::cout << "Source: " << narrowStr << std::endl;
         std::cout << "Destination: " << destination.data() << std::endl;
+    }
+
+    void Latihan1::tryMap1() {
+        std::map<std::wstring, int> myMap;
+        myMap[L"apple"] = 5;
+        myMap[L"banana"] = 3;
+
+        for (const auto& pair : myMap) {
+            std::wcout << L"Key: " << pair.first << L", Value: " << pair.second << std::endl;
+        }
     }
 }

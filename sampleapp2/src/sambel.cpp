@@ -1,6 +1,6 @@
 #include <iostream>
-#include "sambel.h"
 #include <string>
+#include "sambel.h"
 
 Sambel::Sambel() : jumlah_lombok(0), isPedes(false) {
 

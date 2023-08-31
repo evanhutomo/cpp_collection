@@ -13,6 +13,7 @@ namespace LATCPP::BASIC1 {
             std::string getExecutablePath();
             void getWindowsPath();
             void exampleStrncpy(std::wstring src);
+            void tryMap1();
     };
 
 }
