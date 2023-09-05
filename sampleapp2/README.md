@@ -42,6 +42,8 @@
 - [ ] std::map
 - [ ] std::map<std::wstring, int>::const_iterator
 - [ ] std::filesystem::path
+- [ ] std::signal(SIGINT, signal_callback_handler)
+- 
 
 ## Study case
 ```1.
