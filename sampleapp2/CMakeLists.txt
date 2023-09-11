@@ -11,34 +11,45 @@ set(SOURCES
 )
 
 # Learn how to add examples and its option from roots
-# option(BUILD_NUMCPP_EXAMPLES "Build NumCpp examples" ON)
-# option for demonstrate sample code
-option(LYRA_EXAMPLE "build lyra example" ON)
+option(NUMCPP_EXAMPLE "Build NumCpp examples" ON)
+if (NUMCPP_EXAMPLE)
+  add_definitions(-DNUMCPP_EXAMPLE)
+  add_subdirectory(submodules)
+  set(NUMCPP_INCLUDE_DIR "submodules/NumCpp/include")
+endif()
+
+# option for demonstrate sample codels
+option(LYRA_EXAMPLE_2 "build lyra example 2" ON)
+if (LYRA_EXAMPLE_2)
+  add_definitions(-DLYRA_EXAMPLE_2)
+endif()
+
+option(LYRA_EXAMPLE "build lyra example" OFF)
 if (LYRA_EXAMPLE)
   add_definitions(-DLYRA_EXAMPLE)
 endif()
 
-option(PQXX_EXAMPLE "build pqxx and postgresql example" ON)
+option(PQXX_EXAMPLE "build pqxx and postgresql example" OFF)
 if (PQXX_EXAMPLE)
   add_definitions(-DPQXX_EXAMPLE)
 endif()
 
-option(SAMBEL_EXAMPLE "build sambel project example" ON)
+option(SAMBEL_EXAMPLE "build sambel project example" OFF)
 if (SAMBEL_EXAMPLE)
   add_definitions(-DSAMBEL_EXAMPLE)
 endif()
 
-option(LAT1_EXAMPLE "lat1 example" ON)
+option(LAT1_EXAMPLE "lat1 example" OFF)
 if (LAT1_EXAMPLE)
   add_definitions(-DLAT1_EXAMPLE)
 endif()
 
-option(LAT2_EXAMPLE "lat2 (eigen) example" ON)
+option(LAT2_EXAMPLE "lat2 (eigen) example" OFF)
 if (LAT2_EXAMPLE)
   add_definitions(-DLAT2_EXAMPLE)
 endif()
 
-option(SPDLOG_EXAMPLE "spdlog example" ON)
+option(SPDLOG_EXAMPLE "spdlog example" OFF)
 if (SPDLOG_EXAMPLE)
   add_definitions(-DSPDLOG_EXAMPLE)
 endif()
@@ -64,6 +75,7 @@ find_package(PostgreSQL REQUIRED)
 find_package(Eigen3 REQUIRED)
 set(EIGEN3_INCLUDE_DIR "/opt/vcpkg/packages/eigen3_x64-linux/include")
 
+
 add_library(${LIBRARY_NAME} OBJECT ${SOURCES})
 
 # Lib needs to see header files, and library users must also able to see (PUBLIC)
@@ -71,6 +83,7 @@ message(STATUS "Variable value: ${PROJECT_SOURCE_DIR}")
 target_include_directories(${LIBRARY_NAME} 
   PUBLIC ${PROJECT_SOURCE_DIR}/inc
   PUBLIC ${EIGEN3_INCLUDE_DIR}
+  PUBLIC ${NUMCPP_INCLUDE_DIR}
 )
 message(STATUS "Variable value: ${PROJECT_SOURCE_DIR}")
 
