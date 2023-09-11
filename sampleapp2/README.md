@@ -43,7 +43,11 @@
 - [ ] std::map<std::wstring, int>::const_iterator
 - [ ] std::filesystem::path
 - [ ] std::signal(SIGINT, signal_callback_handler)
-- 
+
+## add submodules
+- [x] NumCpp
+- [ ] observable
+- [ ] nlohmann_json
 
 ## Study case
 ```1.
