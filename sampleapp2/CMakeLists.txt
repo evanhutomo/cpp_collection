@@ -10,8 +10,13 @@ set(SOURCES
   src/lat2.cpp  
 )
 
+option(STD_EXAMPLE "Build standard library examples" ON)
+if (STD_EXAMPLE)
+  add_definitions(-DSTD_EXAMPLE)
+endif()
+
 # Learn how to add examples and its option from roots
-option(NUMCPP_EXAMPLE "Build NumCpp examples" ON)
+option(NUMCPP_EXAMPLE "Build NumCpp examples" OFF)
 if (NUMCPP_EXAMPLE)
   add_definitions(-DNUMCPP_EXAMPLE)
   add_subdirectory(submodules)
@@ -19,7 +24,7 @@ if (NUMCPP_EXAMPLE)
 endif()
 
 # option for demonstrate sample codels
-option(LYRA_EXAMPLE_2 "build lyra example 2" ON)
+option(LYRA_EXAMPLE_2 "build lyra example 2" OFF)
 if (LYRA_EXAMPLE_2)
   add_definitions(-DLYRA_EXAMPLE_2)
 endif()

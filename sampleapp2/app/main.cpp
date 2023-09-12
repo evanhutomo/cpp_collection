@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
+#include <ctime>
 #include "../inc/sambel.h"
 #include "../inc/lat1.h"
 #include "../inc/lat2.h"
@@ -99,9 +100,44 @@ struct kill_command
 };
 #endif
 
-int main(int argc, char *argv[])
-{
+void stdFilesystemExist() {
+    std::string pathExample = "example.txt";
+    if (std::filesystem::exists(pathExample)) {
+        std::cout << "File exists" << std::endl;
+    } else {
+        std::cout << "File does not exist" << std::endl;
+    }   
+}
+
+void epochTime() {
+    // Unix epoch timestamp
+    std::time_t timestamp = 1694542961;
+
+    // convert the timestamp to a struct tm (timeinfo)
+    struct tm* timeinfo;
+    timeinfo = std::gmtime(&timestamp);
     
+    // buffer to hold the formatted time
+    char buffer[80];
+
+    // format the date and time as a string
+    strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", timeinfo);
+
+    std::cout << "Unix Timestamp: " << timestamp << std::endl;
+    std::cout << "Human-Readable Date and Time (UTC): " << buffer << std::endl;
+}
+
+int main(int argc, char *argv[]) {
+#ifdef STD_EXAMPLE
+    // std::filesystem::exists
+    stdFilesystemExist();
+    // processing epoch time
+    epochTime();
+
+    
+#endif
+
+
 #ifdef NUMCPP_EXAMPLE
     // Containers
     nc::NdArray<int> a0 = { { 1, 2 }, { 3, 4 } };
