@@ -133,10 +133,57 @@ int main(int argc, char *argv[]) {
     stdFilesystemExist();
     // processing epoch time
     epochTime();
-
-    
 #endif
 
+#ifdef LYRA_EXAMPLE_3
+    std::string mode;
+    bool aaOneTime = false;
+    bool bbOneTime = false;
+    bool bbService = false;
+
+    // Define the command line parser using Lyra
+    auto cli = lyra::cli();
+
+    // Define the "mode" flag with two possible values: "aa" and "bb"
+    cli |= lyra::opt(mode, "mode")["--mode"]
+        ("Select mode: aa or bb")
+        .required();
+
+    // Define options based on the selected mode
+    cli |= lyra::opt(aaOneTime)["--aa_one_time"]
+        ("Enable aa_one_time flag");
+
+    cli |= lyra::opt(bbOneTime)["--bb_one_time"]
+        ("Enable bb_one_time flag");
+
+    cli |= lyra::opt(bbService)["--bb_service"]
+        ("Enable bb_service flag");
+
+    // Parse the command line arguments
+    auto result = cli.parse({argc, argv});
+
+    // Check for errors or display help
+    if (!result) {
+        std::cerr << "Error in command line: " << result.errorMessage() << std::endl;
+        std::cerr << cli << std::endl; // Display help
+        return 1;
+    }
+
+    // Check the selected mode and print options accordingly
+    if (mode == "aa") {
+        std::cout << "Mode: aa" << std::endl;
+        std::cout << "aa_one_time: " << aaOneTime << std::endl;
+    } else if (mode == "bb") {
+        std::cout << "Mode: bb" << std::endl;
+        if (bbOneTime == bbService) {
+            std::cerr << "Error: bb_one_time and bb_service cannot be enabled at the same time" << std::endl;
+            return 1;
+        }
+        std::cout << "bb_one_time: " << bbOneTime << std::endl;
+        std::cout << "bb_service: " << bbService << std::endl;
+    }
+
+#endif
 
 #ifdef NUMCPP_EXAMPLE
     // Containers
@@ -319,7 +366,7 @@ int main(int argc, char *argv[]) {
     nc::linalg::svd(a.astype<double>(), u, s, vt);
 #endif
 
-#ifdef LYRA_EXAMPLE_2
+#if LYRA_EXAMPLE_2
     auto cli = lyra::cli();
     std::string command;
     bool show_help = false;
@@ -339,7 +386,7 @@ int main(int argc, char *argv[]) {
     return result ? 0 : 1;
 #endif
 
-#ifdef LYRA_EXAMPLE
+#if LYRA_EXAMPLE
     int width = 0;
     std::string name;
     std::string path;

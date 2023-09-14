@@ -23,7 +23,13 @@ if (NUMCPP_EXAMPLE)
   set(NUMCPP_INCLUDE_DIR "submodules/NumCpp/include")
 endif()
 
-# option for demonstrate sample codels
+# option for demonstrate sample code
+option(LYRA_EXAMPLE_3 "build lyra example 3" ON)
+if (LYRA_EXAMPLE_3)
+  add_definitions(-DLYRA_EXAMPLE_3)
+endif()
+
+# option for demonstrate sample code
 option(LYRA_EXAMPLE_2 "build lyra example 2" OFF)
 if (LYRA_EXAMPLE_2)
   add_definitions(-DLYRA_EXAMPLE_2)
