@@ -7,12 +7,20 @@ project(CPP_BOILERPLATE VERSION 0.0.1 LANGUAGES CXX)
 set(SOURCES 
   src/sambel.cpp
   src/lat1.cpp
-  src/lat2.cpp  
+  src/lat2.cpp
+  src/visitor_pattern.cpp  
 )
 
-option(STD_EXAMPLE "Build standard library examples" ON)
+# std lib
+option(STD_EXAMPLE "Build standard library examples" OFF)
 if (STD_EXAMPLE)
   add_definitions(-DSTD_EXAMPLE)
+endif()
+
+# visitor design pattern
+option(VISITOR_PATTERN_EXAMPLE "Build visitor design pattern examples" ON)
+if (VISITOR_PATTERN_EXAMPLE)
+  add_definitions(-DVISITOR_PATTERN_EXAMPLE)
 endif()
 
 # Learn how to add examples and its option from roots

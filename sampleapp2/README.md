@@ -52,6 +52,14 @@
 - [ ] observable
 - [ ] nlohmann_json
 
+## add design pattern
+- [x] visitor
+- [ ] observer
+- [ ] singleton
+- [ ] factory
+- [ ] builder
+- [ ] adapter
+
 ## Study case
 ```1.
 inline std::wstring String2WideString(const std::string& str) {

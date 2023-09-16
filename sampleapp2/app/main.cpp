@@ -10,6 +10,8 @@
 #include <pqxx/pqxx>
 #include <spdlog/spdlog.h>
 #include <lyra/lyra.hpp>
+#include "visit_struct.hpp"
+#include "visitor_pattern.h"
 
 #ifdef NUMCPP_EXAMPLE
 #include "NumCpp.hpp"
@@ -127,61 +129,79 @@ void epochTime() {
     std::cout << "Human-Readable Date and Time (UTC): " << buffer << std::endl;
 }
 
+
+
+
 int main(int argc, char *argv[]) {
+#ifdef VISITOR_PATTERN_EXAMPLE
+    // Create shapes
+    Circle circle(5.0);
+    Rectangle rectangle(4.0, 6.0);
+
+    // Create a visitor
+    AreaVisitor areaVisitor;
+
+    // Accept the visitor for each shape
+    circle.accept(areaVisitor);
+    rectangle.accept(areaVisitor);
+#endif
+
 #ifdef STD_EXAMPLE
     // std::filesystem::exists
-    stdFilesystemExist();
+//    stdFilesystemExist();
     // processing epoch time
-    epochTime();
+//    epochTime();
+    // 
 #endif
 
 #ifdef LYRA_EXAMPLE_3
-    std::string mode;
-    bool aaOneTime = false;
-    bool bbOneTime = false;
-    bool bbService = false;
 
-    // Define the command line parser using Lyra
-    auto cli = lyra::cli();
+    // std::string mode;
+    // bool aaOneTime = false;
+    // bool bbOneTime = false;
+    // bool bbService = false;
 
-    // Define the "mode" flag with two possible values: "aa" and "bb"
-    cli |= lyra::opt(mode, "mode")["--mode"]
-        ("Select mode: aa or bb")
-        .required();
+    // // Define the command line parser using Lyra
+    // auto cli = lyra::cli();
 
-    // Define options based on the selected mode
-    cli |= lyra::opt(aaOneTime)["--aa_one_time"]
-        ("Enable aa_one_time flag");
+    // // Define the "mode" flag with two possible values: "aa" and "bb"
+    // cli |= lyra::opt(mode, "mode")["--mode"]
+    //     ("Select mode: aa or bb")
+    //     .required();
 
-    cli |= lyra::opt(bbOneTime)["--bb_one_time"]
-        ("Enable bb_one_time flag");
+    // // Define options based on the selected mode
+    // cli |= lyra::opt(aaOneTime)["--aa_one_time"]
+    //     ("Enable aa_one_time flag");
 
-    cli |= lyra::opt(bbService)["--bb_service"]
-        ("Enable bb_service flag");
+    // cli |= lyra::opt(bbOneTime)["--bb_one_time"]
+    //     ("Enable bb_one_time flag");
 
-    // Parse the command line arguments
-    auto result = cli.parse({argc, argv});
+    // cli |= lyra::opt(bbService)["--bb_service"]
+    //     ("Enable bb_service flag");
 
-    // Check for errors or display help
-    if (!result) {
-        std::cerr << "Error in command line: " << result.errorMessage() << std::endl;
-        std::cerr << cli << std::endl; // Display help
-        return 1;
-    }
+    // // Parse the command line arguments
+    // auto result = cli.parse({argc, argv});
 
-    // Check the selected mode and print options accordingly
-    if (mode == "aa") {
-        std::cout << "Mode: aa" << std::endl;
-        std::cout << "aa_one_time: " << aaOneTime << std::endl;
-    } else if (mode == "bb") {
-        std::cout << "Mode: bb" << std::endl;
-        if (bbOneTime == bbService) {
-            std::cerr << "Error: bb_one_time and bb_service cannot be enabled at the same time" << std::endl;
-            return 1;
-        }
-        std::cout << "bb_one_time: " << bbOneTime << std::endl;
-        std::cout << "bb_service: " << bbService << std::endl;
-    }
+    // // Check for errors or display help
+    // if (!result) {
+    //     std::cerr << "Error in command line: " << result.errorMessage() << std::endl;
+    //     std::cerr << cli << std::endl; // Display help
+    //     return 1;
+    // }
+
+    // // Check the selected mode and print options accordingly
+    // if (mode == "aa") {
+    //     std::cout << "Mode: aa" << std::endl;
+    //     std::cout << "aa_one_time: " << aaOneTime << std::endl;
+    // } else if (mode == "bb") {
+    //     std::cout << "Mode: bb" << std::endl;
+    //     if (bbOneTime == bbService) {
+    //         std::cerr << "Error: bb_one_time and bb_service cannot be enabled at the same time" << std::endl;
+    //         return 1;
+    //     }
+    //     std::cout << "bb_one_time: " << bbOneTime << std::endl;
+    //     std::cout << "bb_service: " << bbService << std::endl;
+    // }
 
 #endif
 
