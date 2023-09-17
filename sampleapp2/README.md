@@ -33,19 +33,20 @@
 ## Task lat1
 - [x] std::filesystem::exists
 - [x] processing epoch time
-- [ ] std::filesystem::is_regular_file
-- [ ] std::filesystem::is_directory
-- [ ] std::filesystem::create_directory
-- [ ] std::filesystem::path
+- [x] std::filesystem::is_regular_file
+- [x] std::filesystem::is_directory
+- [x] std::filesystem::path
+- [x] std::filesystem::create_directory
 - [ ] std::ifstream and std::ofstream
 - [ ] std::stringstream
 - [ ] std::count_if
-- [ ] iterators -> std::begin, std::end, std::distance
 - [ ] std::getline
 - [ ] std::map
+- [ ] iterators -> std::begin, std::end, std::distance
 - [ ] std::map<std::wstring, int>::const_iterator
 - [ ] std::signal(SIGINT, signal_callback_handler)
 - [ ] std::thread // create 2 thread, which while loop. Simulate this to see when debugging, gdb will interchange one to another thread
+- [ ] std::this_thread::sleep_for
 
 ## add submodules
 - [x] NumCpp

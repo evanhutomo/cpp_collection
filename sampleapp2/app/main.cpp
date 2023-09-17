@@ -148,10 +148,31 @@ int main(int argc, char *argv[]) {
 
 #ifdef STD_EXAMPLE
     // std::filesystem::exists
-//    stdFilesystemExist();
+    stdFilesystemExist();
+    
     // processing epoch time
-//    epochTime();
-    // 
+    epochTime();
+    
+    // regular file checker
+    std::filesystem::path pathToCheck("test.txt");
+    if (std::filesystem::is_regular_file(pathToCheck)) {
+        std::cout << pathToCheck << " is a regular file" << std::endl;
+    } else if (std::filesystem::is_directory(pathToCheck)) {
+        std::cout << pathToCheck << " is a directory" << std::endl;
+    } else {
+        std::cout << pathToCheck << " is neither a regular file nor directory" << std::endl;
+    }    
+
+    // creating a directory
+    std::filesystem::path newDirectoryPath("new_directory");
+    try {
+        if (std::filesystem::create_directory(newDirectoryPath))
+            std::cout << "Directory created\n";
+        else
+            std::cout << "Failed to create directory\n";
+    } catch (std::filesystem::filesystem_error& e) {
+        std::cout << e.what() << '\n';
+    }    
 #endif
 
 #ifdef LYRA_EXAMPLE_3

@@ -12,13 +12,13 @@ set(SOURCES
 )
 
 # std lib
-option(STD_EXAMPLE "Build standard library examples" OFF)
+option(STD_EXAMPLE "Build standard library examples" ON)
 if (STD_EXAMPLE)
   add_definitions(-DSTD_EXAMPLE)
 endif()
 
 # visitor design pattern
-option(VISITOR_PATTERN_EXAMPLE "Build visitor design pattern examples" ON)
+option(VISITOR_PATTERN_EXAMPLE "Build visitor design pattern examples" OFF)
 if (VISITOR_PATTERN_EXAMPLE)
   add_definitions(-DVISITOR_PATTERN_EXAMPLE)
 endif()
@@ -32,7 +32,7 @@ if (NUMCPP_EXAMPLE)
 endif()
 
 # option for demonstrate sample code
-option(LYRA_EXAMPLE_3 "build lyra example 3" ON)
+option(LYRA_EXAMPLE_3 "build lyra example 3" OFF)
 if (LYRA_EXAMPLE_3)
   add_definitions(-DLYRA_EXAMPLE_3)
 endif()
