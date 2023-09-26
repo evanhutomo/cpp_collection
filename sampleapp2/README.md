@@ -39,6 +39,12 @@
 - [x] std::filesystem::create_directory
 - [x] std::ifstream (input file stream)
 - [x] std::ofstream (output file stream)
+- [x] std::filesystem::path
+- [x] std::string
+- [x] std::unique_ptr<T>
+- [x] std::make_unique<T> 
+- [x] std::thread
+- [x] std::this_thread::sleep_for
 - [ ] std::stringstream
 - [ ] std::count_if
 - [ ] std::getline
@@ -64,26 +70,20 @@
 	size
 - [ ] std::count
 - [ ] std::array<T>
-- [ ] std::unique_ptr<T>
 - [ ] std::nullopt
 - [ ] std::optional<T>
     value
     size
     at
     value_or
-- [ ] std::filesystem::path
-- [ ] std::string
 - [ ] std::string::find_first_of
 - [ ] std::string::npos
 - [ ] std::copy
-- [ ] std::make_unique<T>
 - [ ] std::transform
 - [ ] std::pow
 - [ ] std::valarray<T>
-- [ ] iterators -> std::begin, std::end, std::distance
 - [ ] std::signal(SIGINT, signal_callback_handler)
-- [x] std::thread // create 2 thread, which while loop. Simulate this to see when debugging, gdb will interchange one to another thread
-- [x] std::this_thread::sleep_for
+- [ ] iterators -> std::begin, std::end, std::distance
 
 ## add submodules
 - [x] NumCpp
