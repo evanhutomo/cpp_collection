@@ -45,6 +45,9 @@
 - [x] std::make_unique<T> 
 - [x] std::thread
 - [x] std::this_thread::sleep_for
+- [ ] std::vector
+- [ ] std::lock_guard<std::mutex>
+- [ ] std::reverse
 - [ ] std::stringstream
 - [ ] std::count_if
 - [ ] std::getline
