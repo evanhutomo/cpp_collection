@@ -37,16 +37,53 @@
 - [x] std::filesystem::is_directory
 - [x] std::filesystem::path
 - [x] std::filesystem::create_directory
-- [ ] std::ifstream and std::ofstream
+- [x] std::ifstream (input file stream)
+- [x] std::ofstream (output file stream)
 - [ ] std::stringstream
 - [ ] std::count_if
 - [ ] std::getline
 - [ ] std::map
-- [ ] iterators -> std::begin, std::end, std::distance
+- [ ] std::map<T>
 - [ ] std::map<std::wstring, int>::const_iterator
+- [ ] std::enable_if
+- [ ] std::enable_if_t<T>
+- [ ] std::decay
+- [ ] std::declval
+- [ ] std::tuple
+- [ ] std::wstring_convert<T>
+- [ ] std::wstring
+- [ ] std::any_of
+- [ ] std::make_move_iterator
+- [ ] std::future
+- [ ] std::all_of
+- [ ] std::unordered_map<T>
+	reserve
+	try_emplace
+- [ ] std::ref<T>
+	get
+	size
+- [ ] std::count
+- [ ] std::array<T>
+- [ ] std::unique_ptr<T>
+- [ ] std::nullopt
+- [ ] std::optional<T>
+    value
+    size
+    at
+    value_or
+- [ ] std::filesystem::path
+- [ ] std::string
+- [ ] std::string::find_first_of
+- [ ] std::string::npos
+- [ ] std::copy
+- [ ] std::make_unique<T>
+- [ ] std::transform
+- [ ] std::pow
+- [ ] std::valarray<T>
+- [ ] iterators -> std::begin, std::end, std::distance
 - [ ] std::signal(SIGINT, signal_callback_handler)
-- [ ] std::thread // create 2 thread, which while loop. Simulate this to see when debugging, gdb will interchange one to another thread
-- [ ] std::this_thread::sleep_for
+- [x] std::thread // create 2 thread, which while loop. Simulate this to see when debugging, gdb will interchange one to another thread
+- [x] std::this_thread::sleep_for
 
 ## add submodules
 - [x] NumCpp

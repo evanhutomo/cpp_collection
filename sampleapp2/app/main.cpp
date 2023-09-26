@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <math.h>
 #include <ctime>
+#include <fstream>
 #include "../inc/sambel.h"
 #include "../inc/lat1.h"
 #include "../inc/lat2.h"
@@ -129,8 +130,86 @@ void epochTime() {
     std::cout << "Human-Readable Date and Time (UTC): " << buffer << std::endl;
 }
 
+void regularFileChecker() {
+    std::filesystem::path pathToCheck("test.txt");
+    if (std::filesystem::is_regular_file(pathToCheck)) {
+        std::cout << pathToCheck << " is a regular file" << std::endl;
+    } else if (std::filesystem::is_directory(pathToCheck)) {
+        std::cout << pathToCheck << " is a directory" << std::endl;
+    } else {
+        std::cout << pathToCheck << " is neither a regular file nor directory" << std::endl;
+    }    
+}
 
+void createDirectory() {
+    std::filesystem::path newDirectoryPath("new_directory");
+    try {
+        if (std::filesystem::create_directory(newDirectoryPath))
+            std::cout << "Directory created\n";
+        else
+            std::cout << "Failed to create directory\n";
+    } catch (std::filesystem::filesystem_error& e) {
+        std::cout << e.what() << '\n';
+    }    
+}
 
+void outputStreamTextFile() {
+    // Create an instance of std::ofstream and open a file for writing
+    std::ofstream outputFile("outputstream.txt");
+
+    // Check if the file opened successfully
+    if (!outputFile.is_open()) {
+        spdlog::error("Error opening the file.");
+    }
+
+    // Write data to the file
+    outputFile << "Hello, World!" << std::endl;
+    outputFile << "This is a sample line of text." << std::endl;
+
+    // Close the file
+    outputFile.close();
+
+    // Optionally, you can check if the file was closed successfully
+    if (outputFile.good()) {
+        spdlog::info("File closed successfully.");
+    } else {
+        spdlog::error("Error closing the file.");    
+    }    
+}
+
+void inputStreamTextFile() {
+    spdlog::info("entering streamTextFile()");
+    try {
+        std::ifstream inputFile;
+        inputFile.open("test.txt");
+        if (inputFile.is_open()) {
+            std::string line;
+            while (std::getline(inputFile, line)) {
+                spdlog::info(line);
+            }
+            inputFile.close();
+        } else {
+            spdlog::info("Unable to open file");
+        }
+    } catch (std::ifstream::failure& e) {
+        std::cout << e.what() << std::endl;
+    }
+}
+
+// Function that will be executed by the first thread
+void threadFunction1() {
+    for (int i = 0; i < 5; i++) {
+        std::cout << "Thread 1: " << i << std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+}
+
+void threadFunction2() {
+    for (int i = 0; i < 5; i++) {
+        std::cout << "Thread 2: " << i << std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }    
+}
 
 int main(int argc, char *argv[]) {
 #ifdef VISITOR_PATTERN_EXAMPLE
@@ -148,31 +227,34 @@ int main(int argc, char *argv[]) {
 
 #ifdef STD_EXAMPLE
     // std::filesystem::exists
-    stdFilesystemExist();
+    // stdFilesystemExist();
     
     // processing epoch time
-    epochTime();
+    // epochTime();
     
     // regular file checker
-    std::filesystem::path pathToCheck("test.txt");
-    if (std::filesystem::is_regular_file(pathToCheck)) {
-        std::cout << pathToCheck << " is a regular file" << std::endl;
-    } else if (std::filesystem::is_directory(pathToCheck)) {
-        std::cout << pathToCheck << " is a directory" << std::endl;
-    } else {
-        std::cout << pathToCheck << " is neither a regular file nor directory" << std::endl;
-    }    
+    // regularFileChecker();
 
     // creating a directory
-    std::filesystem::path newDirectoryPath("new_directory");
-    try {
-        if (std::filesystem::create_directory(newDirectoryPath))
-            std::cout << "Directory created\n";
-        else
-            std::cout << "Failed to create directory\n";
-    } catch (std::filesystem::filesystem_error& e) {
-        std::cout << e.what() << '\n';
-    }    
+    // createDirectory();
+
+    // input stream txt file
+    // inputStreamTextFile();
+
+    // output stream 
+    // outputStreamTextFile();
+
+    // thread
+    // create 2 thread and start executing the thread function 
+    std::thread t1(threadFunction1);
+    std::thread t2(threadFunction2);
+    // wait for both thread to finish
+    t1.join();
+    t2.join();
+    std::cout << "both threads have finished execution." << std::endl;
+    // flow: create function -> create thread -> join thread -> finish execution
+
+    
 #endif
 
 #ifdef LYRA_EXAMPLE_3
