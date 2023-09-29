@@ -203,13 +203,31 @@ void threadFunction1() {
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }
-
 void threadFunction2() {
     for (int i = 0; i < 5; i++) {
         std::cout << "Thread 2: " << i << std::endl;
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }    
 }
+
+// Define a class that holds a japanese char
+class Kotoba {
+public: 
+    Kotoba(const std::wstring& kana) : _kana(kana) {
+        std::wcout << L"Constructing Kana: " << _kana << std::endl;
+    }
+
+    ~Kotoba() {
+        std::wcout << L"Destructing Kana: " << _kana << std::endl;
+    }
+
+    std::wstring getKana() const {
+        return _kana;
+    }
+
+private:
+    std::wstring _kana;
+};
 
 int main(int argc, char *argv[]) {
 #ifdef VISITOR_PATTERN_EXAMPLE
@@ -253,6 +271,16 @@ int main(int argc, char *argv[]) {
     t2.join();
     std::cout << "both threads have finished execution." << std::endl;
     // flow: create function -> create thread -> join thread -> finish execution
+
+    // std::vector<T>
+    std::vector<Kotoba> vectorOfChar;
+    vectorOfChar.push_back(Kotoba(L"大学"));
+    vectorOfChar.push_back(Kotoba(L"労働"));
+    vectorOfChar.push_back(Kotoba(L"組合"));
+    for(const auto& kana : vectorOfChar) {
+        std::wcout << kana.getKana() << std::endl;
+    }
+
 
     
 #endif
@@ -578,7 +606,7 @@ int main(int argc, char *argv[]) {
 
 #ifdef LAT1_EXAMPLE
     // lat1
-    std::wstring japstr = L"穫トぞすな域応選こーがク究8生ニソサラ現手ス消団メタカ気今げへっ関航稿マ里非メヲ済欧ぽ政道ツ何産禁リぞす要調浅添さぼリ。";
+    std::wstring japstr = L"大学労働組合";
     std::wstring engstr = L"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eleifend dui sem, id sodales sapien fringilla quis.";
     auto a = std::make_unique<LATCPP::BASIC1::Latihan1>();
     a->exampleStrncpy(engstr);

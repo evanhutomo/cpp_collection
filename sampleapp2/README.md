@@ -45,8 +45,7 @@
 - [x] std::make_unique<T> 
 - [x] std::thread
 - [x] std::this_thread::sleep_for
-- [ ] std::vector
-- [ ] std::lock_guard<std::mutex>
+- [ ] std::vector<T>
 - [ ] std::reverse
 - [ ] std::stringstream
 - [ ] std::count_if
@@ -54,6 +53,10 @@
 - [ ] std::map
 - [ ] std::map<T>
 - [ ] std::map<std::wstring, int>::const_iterator
+- [ ] std::unordered_map<T>
+	reserve
+	try_emplace
+- [ ] std::lock_guard<std::mutex>
 - [ ] std::enable_if
 - [ ] std::enable_if_t<T>
 - [ ] std::decay
@@ -65,9 +68,6 @@
 - [ ] std::make_move_iterator
 - [ ] std::future
 - [ ] std::all_of
-- [ ] std::unordered_map<T>
-	reserve
-	try_emplace
 - [ ] std::ref<T>
 	get
 	size
