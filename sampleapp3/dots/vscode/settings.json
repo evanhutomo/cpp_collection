@@ -1,0 +1,25 @@
+{
+    "files.associations": {
+        "fstream": "cpp",
+        "valarray": "cpp",
+        "array": "cpp",
+        "ostream": "cpp",
+        "cstdlib": "cpp"
+    },
+    "cmake.configureOnOpen": true,
+    "cmake.configureArgs": [
+        // LINUX
+        // "-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON ${workspaceFolder}",
+        // "--debug-output",
+        // "-DCMAKE_TOOLCHAIN_FILE=/opt/vcpkg/scripts/buildsystems/vcpkg.cmake"
+        
+        // WINDOWS
+        // "CMAKE_TOOLCHAIN_FILE": "C:/Users/evanhutomo/vcpkg/scripts/buildsystems/vcpkg.cmake", // Windows
+        // "VCPKG_TARGET_TRIPLET": "x64-windows",
+        // "CMAKE_PREFIX_PATH": "C:/Users/evanhutomo/vcpkg/packages",
+        // "CMAKE_BUILD_TYPE": "Release",        
+    ],
+    "cmake.buildArgs": [
+        
+    ]
+}
