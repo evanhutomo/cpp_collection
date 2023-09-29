@@ -3,11 +3,54 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <memory>
 
 #include <lyra/lyra.hpp>
 #include <nlohmann/json.hpp>
 
 #include "data.h"
+
+#include "ftxui/component/captured_mouse.hpp"
+#include "ftxui/component/component.hpp"
+#include "ftxui/component/component_base.hpp"
+#include "ftxui/component/component_options.hpp"
+#include "ftxui/component/screen_interactive.hpp"
+#include "ftxui/dom/elements.hpp"
+#include "ftxui/util/ref.hpp"
+
+namespace ftxui{
+    void createComponent() {
+        std::string first_name;
+        std::string last_name;
+        std::string password;
+
+        Component input_first_name = Input(&first_name, "First name");
+        Component input_last_name = Input(&last_name, "Last name");
+
+        InputOption password_option;
+        password_option.password = true;
+        Component input_password = Input(&password, "Password", password_option);
+
+        auto component = Container::Vertical({
+            input_first_name,
+            input_last_name,
+            input_password,
+        });
+
+        auto renderer = Renderer(component, [&] {
+            return vbox({
+                text("Hello " + first_name + " " + last_name + "!"),
+                separator(),
+                hbox(text("First name: "), input_first_name->Render()),
+                hbox(text("Last name: "), input_last_name->Render()),
+                hbox(text("Password: "), input_password->Render()),                      
+            }) | border;
+        });
+
+        auto screen = ScreenInteractive::TerminalOutput();
+        screen.Loop(renderer);
+    }
+}
 
 namespace KOTOBAKOE::MAIN {
 int argParse(int argc, const char** argv) {
@@ -84,8 +127,10 @@ int readAndParse() {
 } // namespace KOTOBAKOE::MAIN
 
 int main(int argc, const char** argv) {
-    auto errcode = KOTOBAKOE::MAIN::argParse(argc, argv);    
-    auto errcode2 = KOTOBAKOE::MAIN::readAndParse();
+    KOTOBAKOE::MAIN::argParse(argc, argv);    
+    KOTOBAKOE::MAIN::readAndParse();
 
-    return errcode;
+    ftxui::createComponent();
+
+    return 0;
 }

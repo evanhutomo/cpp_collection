@@ -45,6 +45,7 @@
 - [x] std::make_unique<T> 
 - [x] std::thread
 - [x] std::this_thread::sleep_for
+- [ ] std::sort
 - [ ] std::vector<T>
 - [ ] std::reverse
 - [ ] std::stringstream
@@ -113,6 +114,16 @@ inline std::wstring String2WideString(const std::string& str) {
 ```2.
 std::optional<std::map<std::wstring, int>> arg1;
 auto a = SomeFunc(*arg1, arg2);     // pass by reference?? 
+```
+
+```3. 
+std::vector<structA> contents(10); // let say there are 10 elements
+std::vector<SOME::SomeStruct> _variable(contents.begin(), contents.end());  // put the contents into _variable
+std::sort(std::begin(_variable), std::end(_variable), someFunc);  // use someFunc to sort the _variable
+
+bool someFunc(std::vector<structA> a, std::vector<structA> b) {
+    return a.member1 < b.member1;
+}
 ```
 
 

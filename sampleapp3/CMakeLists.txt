@@ -11,6 +11,7 @@ set(EXE_PATH ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 # OPTIONS
 option(USE_DEBUG "Debug mode" ON)
 option(USE_LINUX_ENV "Linux mode" ON)
+option(USE_QUIET "Quiet message options" OFF)
 
 # MODE
 if (USE_DEBUG)
@@ -25,7 +26,7 @@ else()
     set(CMAKE_BUILD_TYPE Release)
 endif()
 message(STATUS "EXE_PATH: ${EXE_PATH}")
-
+    
 # OPERATING SYSTEM
 if (USE_LINUX_ENV)
     # LINUX
@@ -41,11 +42,13 @@ endif()
 find_package(spdlog CONFIG REQUIRED)
 find_package(lyra CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
+find_package(ftxui REQUIRED)
 
 # INCLUDE
 include_directories(
     ${CMAKE_SOURCE_DIR}/include
 )
+include(cmake/kotobakoe_message.cmake)
 # add_subdirectory()
 
 # LIBRARY
@@ -70,10 +73,13 @@ target_include_directories(${PROJ_NAME} PUBLIC
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 # LINK LIBRARIES
-target_link_libraries(${PROJ_NAME} PUBLIC 
-    spdlog::spdlog spdlog::spdlog_header_only
-    bfg::lyra
-    nlohmann_json nlohmann_json::nlohmann_json
+target_link_libraries(${PROJ_NAME}  
+    PUBLIC ftxui::screen
+    PUBLIC ftxui::dom
+    PUBLIC ftxui::component    
+    PUBLIC spdlog::spdlog spdlog::spdlog_header_only
+    PUBLIC bfg::lyra
+    PUBLIC nlohmann_json nlohmann_json::nlohmann_json
 )
 
 # COMPILE OPTIONS
