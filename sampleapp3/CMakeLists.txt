@@ -12,7 +12,7 @@ set(EXE_PATH ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 option(USE_DEBUG "Debug mode" ON)
 option(USE_LINUX_ENV "Linux mode" ON)
 option(USE_QUIET "Quiet message options" OFF)
-option(BUILD_SAMPLE_CODE "Build sample code" OFF)
+option(BUILD_SAMPLE_CODE "Build sample code" ON)
 
 # MODE
 if (BUILD_SAMPLE_CODE)
