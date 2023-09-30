@@ -7,7 +7,8 @@ Simple vocabulary flash card apps for private use.
 - [x] create feature parse my own vocabulary data text (notion) to JSON
 - [x] explore examples of FTXUI
 - [x] try to implement FTXUI
-- [ ] find event on FTXUI
+- [x] find event on FTXUI
+- [ ] add sample code from FTXUI to this project
 - [ ] create a menu 1. parse to JSON (input: txt file with xx-xx-xx format, output: json file, err code) 
 - [ ] create a menu 2. DB (input: json file, output: records in DB, err code)
 
