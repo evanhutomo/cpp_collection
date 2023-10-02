@@ -210,6 +210,7 @@ void threadFunction2() {
     }    
 }
 
+
 // Define a class that holds a japanese char
 class Kotoba {
 public: 
@@ -228,6 +229,61 @@ public:
 private:
     std::wstring _kana;
 };
+
+void stdThread() {
+    std::thread t1(threadFunction1);
+    std::thread t2(threadFunction2);
+    // wait for both thread to finish
+    t1.join();
+    t2.join();
+    std::cout << "both threads have finished execution." << std::endl;
+    // flow: create function -> create thread -> join thread -> finish execution
+
+    // std::vector<T>
+    std::vector<Kotoba> vectorOfChar;
+    vectorOfChar.push_back(Kotoba(L"大学"));
+    vectorOfChar.push_back(Kotoba(L"労働"));
+    vectorOfChar.push_back(Kotoba(L"組合"));
+    for(const auto& kana : vectorOfChar) {
+        std::wcout << kana.getKana() << std::endl;
+    }
+}
+
+void char2Find() {
+    std::string text = "Hello, World!";
+    std::string charactersToFind = "aeiou";
+
+    // Find the first occurrence of any vowel in the string.
+    size_t foundPos = text.find_first_of(charactersToFind);
+
+    if (foundPos != std::string::npos) {
+        std::cout << "Found a vowel at position " << foundPos << ": " << text[foundPos] << std::endl;
+    } else {
+        std::cout << "No vowel found in the string." << std::endl;
+    }    
+}
+
+void stdSort_1() {
+    std::vector<int> numbers = {5, 2, 9, 1, 5, 6};
+
+    // Sort the vector in ascending order
+    std::sort(numbers.begin(), numbers.end());
+
+    // Print the sorted vector
+    for (auto number : numbers) {
+        std::cout << number << " ";
+    }
+    std::cout << std::endl;
+
+    // Sort the vector in descending order
+    std::sort(numbers.begin(), numbers.end(), std::greater<int>());
+
+    // Print the sorted vector
+    for (auto number : numbers) {
+        std::cout << number << " ";
+    }
+    std::cout << std::endl;
+}
 
 int main(int argc, char *argv[]) {
 #ifdef VISITOR_PATTERN_EXAMPLE
@@ -264,24 +320,13 @@ int main(int argc, char *argv[]) {
 
     // thread
     // create 2 thread and start executing the thread function 
-    std::thread t1(threadFunction1);
-    std::thread t2(threadFunction2);
-    // wait for both thread to finish
-    t1.join();
-    t2.join();
-    std::cout << "both threads have finished execution." << std::endl;
-    // flow: create function -> create thread -> join thread -> finish execution
+    stdThread();
 
-    // std::vector<T>
-    std::vector<Kotoba> vectorOfChar;
-    vectorOfChar.push_back(Kotoba(L"大学"));
-    vectorOfChar.push_back(Kotoba(L"労働"));
-    vectorOfChar.push_back(Kotoba(L"組合"));
-    for(const auto& kana : vectorOfChar) {
-        std::wcout << kana.getKana() << std::endl;
-    }
+    // find occurence char
+    char2Find();    
 
-
+    // std::sort
+    stdSort_1();
     
 #endif
 

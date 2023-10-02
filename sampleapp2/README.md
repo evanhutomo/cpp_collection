@@ -45,11 +45,14 @@
 - [x] std::make_unique<T> 
 - [x] std::thread
 - [x] std::this_thread::sleep_for
-- [ ] std::sort
-- [ ] std::vector<T>
+- [x] std::string::find_first_of
+- [x] std::string::npos
+- [x] std::sort
+- [x] std::vector<T>
 - [ ] std::reverse
 - [ ] std::stringstream
 - [ ] std::count_if
+- [ ] std::find_if
 - [ ] std::getline
 - [ ] std::map
 - [ ] std::map<T>
@@ -80,8 +83,6 @@
     size
     at
     value_or
-- [ ] std::string::find_first_of
-- [ ] std::string::npos
 - [ ] std::copy
 - [ ] std::transform
 - [ ] std::pow
@@ -126,4 +127,11 @@ bool someFunc(std::vector<structA> a, std::vector<structA> b) {
 }
 ```
 
-
+```4. iterate and change the value
+    std::string someString = "01011";
+    std::vector<bool> result;
+    std::transform(someString.begin(), someString.end(), result.begin(), [](auto x) {
+        return x == '1' ? true : false;
+        });
+    return result;
+```
