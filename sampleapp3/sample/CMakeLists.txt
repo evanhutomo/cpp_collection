@@ -11,5 +11,4 @@ function(sample name)
   target_compile_features(kotobakoe_${name} PRIVATE cxx_std_20)
 endfunction(sample)
 
-add_subdirectory(component)
-add_subdirectory(dom)
+add_subdirectory(satu)

@@ -285,6 +285,80 @@ void stdSort_1() {
     std::cout << std::endl;
 }
 
+void stdReverse() {
+    std::vector<int> myVector = {1, 2, 3, 4, 5, 6, 7};
+
+    // Reverse only the elements from index 2 to 5 (inclusive)
+    auto start = myVector.begin() + 2; // Iterator pointing to element 3
+    auto end = myVector.begin() + 5;   // Iterator pointing to element 6
+
+    std::reverse(start, end + 1); // +1 to include the end element in the reverse
+
+    // Print the reversed vector
+    for (int num : myVector) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+}
+
+void stdDistance() {
+    std::vector<int> myVector = {1, 2, 3, 4, 5};
+
+    // Calculate the distance between the beginning and end of the vector
+    std::ptrdiff_t distance = std::distance(std::begin(myVector), std::end(myVector));
+
+    std::cout << "Number of elements in the vector: " << distance << std::endl;
+}
+
+struct TestStruct {
+    int value1;
+    double value2;
+    char value3;
+};
+
+void stdOptional() {
+    std::optional<TestStruct> myOptional;
+
+    // Check if the optional has a value using std::nullopt
+    if (!myOptional.has_value()) {
+        std::cout << "myOptional is empty" << std::endl;
+    } else {
+        // Accessing the value if it's present (not recommended without checking)
+        TestStruct myValue = myOptional.value();
+        std::cout << "myOptional contains a value: " << myValue.value1 << ", " << myValue.value2 << ", " << myValue.value3 << std::endl;
+    }
+
+    // Assign a value to the optional
+    TestStruct newValue = {42, 3.14, 'A'};
+    myOptional = newValue;
+
+    // Check again after assigning a value
+    if (myOptional.has_value()) {
+        TestStruct myValue = myOptional.value();
+        std::cout << "myOptional now contains a value: " << myValue.value1 << ", " << myValue.value2 << ", " << myValue.value3 << std::endl;
+    }
+
+    // Using std::nullopt to reset the optional to empty
+    myOptional = std::nullopt;
+
+    // Check if it's empty again
+    if (!myOptional.has_value()) {
+        std::cout << "myOptional is empty again" << std::endl;
+    }
+
+    // value_or 
+    std::optional<int> myOptional2 = 42;
+
+    // Using std::optional::value_or() with a default value
+    int value = myOptional2.value_or(-1);
+    std::cout << "myOptional2: " << value << std::endl;
+
+    // Using value_or() with an empty optional
+    std::optional<int> emptyOptional;
+    int defaultValue = emptyOptional.value_or(-1);
+    std::cout << "Default Value: " << defaultValue << std::endl;   
+}
+
 int main(int argc, char *argv[]) {
 #ifdef VISITOR_PATTERN_EXAMPLE
     // Create shapes
@@ -320,13 +394,24 @@ int main(int argc, char *argv[]) {
 
     // thread
     // create 2 thread and start executing the thread function 
-    stdThread();
+    // stdThread();
 
     // find occurence char
-    char2Find();    
+    // char2Find();    
 
     // std::sort
-    stdSort_1();
+    // stdSort_1();
+
+    // std::reverse
+    // stdReverse();
+
+    // std::distance
+    // stdDistance();
+
+    // std::optional, std::nullopt
+    // stdOptional();
+    
+
     
 #endif
 

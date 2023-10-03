@@ -49,17 +49,22 @@
 - [x] std::string::npos
 - [x] std::sort
 - [x] std::vector<T>
-- [ ] std::reverse
+- [x] std::reverse
+- [x] std::nullopt
+- [x] std::optional<T>::value()
+- [x] std::optional<T>::value_or()
+- [x] iterators -> std::begin, std::end, std::distance
 - [ ] std::stringstream
 - [ ] std::count_if
 - [ ] std::find_if
 - [ ] std::getline
-- [ ] std::map
 - [ ] std::map<T>
 - [ ] std::map<std::wstring, int>::const_iterator
 - [ ] std::unordered_map<T>
-	reserve
-	try_emplace
+- [ ] std::unordered_map<T>::reserve()
+- [ ] std::unordered_map<T>::try_emplace()
+- [ ] std::array<T>
+- [ ] std::valarray<T>    
 - [ ] std::lock_guard<std::mutex>
 - [ ] std::enable_if
 - [ ] std::enable_if_t<T>
@@ -76,19 +81,10 @@
 	get
 	size
 - [ ] std::count
-- [ ] std::array<T>
-- [ ] std::nullopt
-- [ ] std::optional<T>
-    value
-    size
-    at
-    value_or
 - [ ] std::copy
 - [ ] std::transform
 - [ ] std::pow
-- [ ] std::valarray<T>
 - [ ] std::signal(SIGINT, signal_callback_handler)
-- [ ] iterators -> std::begin, std::end, std::distance
 
 ## add submodules
 - [x] NumCpp
