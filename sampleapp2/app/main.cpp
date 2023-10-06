@@ -7,6 +7,7 @@
 #include <ctime>
 #include <fstream>
 #include <unordered_map>
+#include <valarray>
 // #include <unordered_set>
 #include "../inc/sambel.h"
 #include "../inc/lat1.h"
@@ -494,6 +495,128 @@ namespace std_unordered_map_example {
     }
 } // namespace std_unordered_map_example
 
+namespace std_array_example {
+    void runExample_1() {
+        PRINT_FUNC_NAME();
+        std::array<int, 5> myArray;
+        for(int i = 0; i < myArray.size(); i++) {
+            myArray[i] = i * 10;
+        }
+
+        // print the array
+        for (const auto &element : myArray) {
+            std::cout << element << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+namespace std_map_example {
+    void runExample_1() {
+        PRINT_FUNC_NAME();
+        std::map<std::string, int> myMap;
+        
+        myMap["apple"] = 5;
+        myMap["banana"] = 3;
+        
+        std::string keyToFind = "banana";
+        if (myMap.find(keyToFind) != myMap.end()) {
+            std::cout << "Value for key '" << keyToFind << "': " << myMap[keyToFind] << std::endl;
+        } else {
+            std::cout << "Key '" << keyToFind << "' not found in the map." << std::endl;
+        }
+
+        // iterate through map
+        std::cout << "Contents of the map:" << std::endl;
+        for (const auto& pair : myMap) {
+            std::cout << "Key: " << pair.first << ", Value: " << pair.second << std::endl;
+        }
+    }
+
+    void runExample_2() {
+        PRINT_FUNC_NAME();
+        std::map<std::wstring, int> myMap;
+
+        // Insert key-value pairs into the map
+        myMap[L"AA"] = 5;
+        myMap[L"BB"] = 3;
+        myMap[L"CC"] = 7;
+
+        // Using a const_iterator to access elements
+        std::cout << "Contents of the map using const_iterator:" << std::endl;
+        for (std::map<std::wstring, int>::const_iterator it = myMap.begin(); it != myMap.end(); ++it) {
+            std::wcout << L"Key: " << it->first << L", Value: " << it->second << std::endl;
+        }
+    }    
+}
+
+namespace std_valarray_example {
+    void runExample_1() {
+        PRINT_FUNC_NAME();
+        // Create a valarray of integers
+        std::valarray<int> myValArray = {1, 2, 3, 4, 5};
+
+        // Print the original valarray
+        std::cout << "Original valarray: ";
+        for (const auto& element : myValArray) {
+            std::cout << element << " ";
+        }
+        std::cout << std::endl;
+
+        // shift(): Shift elements to the right by 2 positions
+        myValArray = myValArray.shift(-2);
+        // Result: {0,0,1,2,3}
+
+        // Print the valarray after shift
+        std::cout << "Shifted valarray: ";
+        for (const auto& element : myValArray) {
+            std::cout << element << " ";
+        }
+        std::cout << std::endl;
+
+        // cshift(): Circular shift elements to the left by 1 position
+        myValArray = myValArray.cshift(1);
+        // Result: {0,1,2,3,0}
+
+        // Print the valarray after circular shift
+        std::cout << "Circularly shifted valarray: ";
+        for (const auto& element : myValArray) {
+            std::cout << element << " ";
+        }
+        std::cout << std::endl;
+
+        // apply(): Apply a function to each element (e.g., square each element)
+        myValArray = myValArray.apply([](int x) { return x * x; });
+        // Result: {0, 1, 4, 9, 0}
+
+        // Print the valarray after applying the function
+        std::cout << "Valarray after applying the function: ";
+        for (const auto& element : myValArray) {
+            std::cout << element << " ";
+        }
+        std::cout << std::endl;
+
+        // sum(): Compute the sum of elements
+        int sum = myValArray.sum();
+        // Result: 14
+
+        // min(): Find the minimum element
+        int minValue = myValArray.min();
+        // Result: 0
+
+        // max(): Find the maximum element
+        int maxValue = myValArray.max();
+        // Result: 9
+
+        // Print the summary statistics
+        std::cout << "Sum: " << sum << std::endl;
+        std::cout << "Min Value: " << minValue << std::endl;
+        std::cout << "Max Value: " << maxValue << std::endl;        
+    }
+
+
+}
+
 namespace StructWithCons {
     int SomeFuncWithReturnInt() {
         return 10;
@@ -568,9 +691,19 @@ int main(int argc, char *argv[]) {
     // auto a = StructWithCons::main2();
 
     // std::unordered_map
-    std_unordered_map_example::runExample_1();
-    std_unordered_map_example::runExample_2();
-    std_unordered_map_example::runExample_3();
+    // std_unordered_map_example::runExample_1();
+    // std_unordered_map_example::runExample_2();
+    // std_unordered_map_example::runExample_3();
+
+    // std::array
+    // std_array_example::runExample_1();
+
+    // std::map
+    // std_map_example::runExample_1();
+    // std_map_example::runExample_2();
+
+    // std::valarray
+    std_valarray_example::runExample_1();
 
 #endif
 

@@ -35,16 +35,17 @@ or just implement configs/ to .vscode/ directory.
 - [x] std::unordered_map<T>
 - [x] std::unordered_map<T>::reserve() -> preallocate the memory
 - [x] std::unordered_map<T>::bucket_count() -> get the bucket count
-- [ ] std::unordered_map<T>::try_emplace()
-- [ ] std::array<T>
-- [ ] std::valarray<T>   
+- [x] std::unordered_map<T>::try_emplace()
+- [x] std::map<T>
+- [x] std::map<std::wstring, int>::const_iterator 
+- [x] std::array<T>
+- [x] std::valarray<T>
+- [ ] std::unordered_multimap<T>
 - [ ] std::deque<T>
 - [ ] std::stringstream
 - [ ] std::count_if
 - [ ] std::find_if
 - [ ] std::getline
-- [ ] std::map<T>
-- [ ] std::map<std::wstring, int>::const_iterator 
 - [ ] getopt
 - [ ] std::lock_guard<std::mutex>
 - [ ] std::enable_if
