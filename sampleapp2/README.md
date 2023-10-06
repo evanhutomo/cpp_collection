@@ -1,34 +1,12 @@
 ## sampleapp2
-
-## Structure
-
-```
-.
-├── CMakeLists.txt
-├── LICENSE
-├── README.md
-├── app
-│   └── main.cpp
-├── configs
-│   ├── c_cpp_properties.json
-│   ├── launch.json
-│   └── settings.json
-├── inc
-│   ├── lat1.h
-│   ├── lat2.h
-│   └── sambel.h
-├── runner
-└── src
-    ├── lat1.cpp
-    ├── lat2.cpp
-    └── sambel.cpp
-```
+just sample app to drill myself how to handle with common c++ std lib.  
 
 ## How to cmake build
 
 ```
 ./runner.sh -a
 ```
+or just implement configs/ to .vscode/ directory.
 
 ## Task lat1
 - [x] std::filesystem::exists
@@ -54,17 +32,20 @@
 - [x] std::optional<T>::value()
 - [x] std::optional<T>::value_or()
 - [x] iterators -> std::begin, std::end, std::distance
+- [x] std::unordered_map<T>
+- [x] std::unordered_map<T>::reserve() -> preallocate the memory
+- [x] std::unordered_map<T>::bucket_count() -> get the bucket count
+- [ ] std::unordered_map<T>::try_emplace()
+- [ ] std::array<T>
+- [ ] std::valarray<T>   
+- [ ] std::deque<T>
 - [ ] std::stringstream
 - [ ] std::count_if
 - [ ] std::find_if
 - [ ] std::getline
 - [ ] std::map<T>
-- [ ] std::map<std::wstring, int>::const_iterator
-- [ ] std::unordered_map<T>
-- [ ] std::unordered_map<T>::reserve()
-- [ ] std::unordered_map<T>::try_emplace()
-- [ ] std::array<T>
-- [ ] std::valarray<T>    
+- [ ] std::map<std::wstring, int>::const_iterator 
+- [ ] getopt
 - [ ] std::lock_guard<std::mutex>
 - [ ] std::enable_if
 - [ ] std::enable_if_t<T>
@@ -99,6 +80,10 @@
 - [ ] builder
 - [ ] adapter
 
+## other
+- [ ] hash function
+- [ ] linked list
+
 ## Study case
 ```1.
 inline std::wstring String2WideString(const std::string& str) {
@@ -130,4 +115,15 @@ bool someFunc(std::vector<structA> a, std::vector<structA> b) {
         return x == '1' ? true : false;
         });
     return result;
+```
+
+```5. 
+namespace std {
+    template <>
+    struct hash<MyKey> {
+        std::size_t operator()(const MyKey &key) const {
+            return std::hash<std::string>()(key.getName()) ^ std::hash<int>()(key.getId());
+        }
+    };
+}
 ```

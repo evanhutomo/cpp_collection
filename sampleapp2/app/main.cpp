@@ -1,3 +1,4 @@
+// HEADERS
 #include <iostream>
 #include <memory>
 #include <stdlib.h>
@@ -5,6 +6,8 @@
 #include <math.h>
 #include <ctime>
 #include <fstream>
+#include <unordered_map>
+// #include <unordered_set>
 #include "../inc/sambel.h"
 #include "../inc/lat1.h"
 #include "../inc/lat2.h"
@@ -13,12 +16,18 @@
 #include <lyra/lyra.hpp>
 #include "visit_struct.hpp"
 #include "visitor_pattern.h"
-
 #ifdef NUMCPP_EXAMPLE
 #include "NumCpp.hpp"
 #include <filesystem>
 #include <iostream>
 #endif
+
+// MACROS
+#define PRINT_STR(x) std::cout << x << std::endl
+#define PRINT_FUNC_NAME() \
+    std::cout << "---------------------" << std::endl \
+              << "FUNCTION: " << __func__ << "()" << std::endl \
+              << "---------------------" << std::endl
 
 #ifdef LYRA_EXAMPLE_2
 // Run a process, sub-command data.
@@ -359,6 +368,131 @@ void stdOptional() {
     std::cout << "Default Value: " << defaultValue << std::endl;   
 }
 
+// std::unordered_map
+namespace std_unordered_map_example {
+   class MyKey {
+    public:
+        MyKey(const std::string& name, int id) : name_(name), id_(id) {}
+
+        const std::string& getName() const {
+            return name_;
+        }
+
+        int getId() const {
+            return id_;
+        }
+
+        bool operator==(const MyKey& other) const {
+            return name_ == other.name_ && id_ == other.id_;
+        }
+
+    private:
+        std::string name_;
+        int id_;
+    };
+
+    // Define a custom hash function for MyKey
+    struct MyKeyHash {
+        std::size_t operator()(const MyKey& key) const {
+            // Combine the hash values of name_ and id_
+            return std::hash<std::string>()(key.getName()) ^ std::hash<int>()(key.getId());
+        }
+    };
+
+    // Define a custom equality comparator for MyKey
+    struct MyKeyEqual {
+        bool operator()(const MyKey& key1, const MyKey& key2) const {
+            return key1 == key2;
+        }
+    };
+
+    void runExample_1() {
+        PRINT_FUNC_NAME();
+        // Create an unordered_map with MyKey as the key type and int as the value type
+        std::unordered_map<MyKey, int, MyKeyHash, MyKeyEqual> myMap;
+
+        // Insert key-value pairs into the unordered_map
+        MyKey key1("apple", 1);
+        MyKey key2("banana", 2);
+        MyKey key3("cherry", 3);
+
+        myMap[key1] = 5;
+        myMap[key2] = 3;
+        myMap[key3] = 7;
+
+        // Access and print values using keys
+        MyKey keyToFind("banana", 2);
+        if (myMap.find(keyToFind) != myMap.end()) {
+            std::cout << "Value for key (" << keyToFind.getName() << ", " << keyToFind.getId() << "): " << myMap[keyToFind] << std::endl;
+        } else {
+            std::cout << "Key (" << keyToFind.getName() << ", " << keyToFind.getId() << ") not found in the map." << std::endl;
+        }
+
+        // Iterate through the unordered_map
+        std::cout << "Contents of the unordered_map:" << std::endl;
+        for (const auto& pair : myMap) {
+            // first is representation of key, second is representation of value
+            std::cout << "Key (" << pair.first.getName() << ", " << pair.first.getId() << "), Value: " << pair.second << std::endl;
+        }
+    }
+
+    void runExample_2() {
+        PRINT_FUNC_NAME();
+        std::unordered_map<std::string, int> myMap;
+
+        // Reserve memory for a specific number of elements
+        myMap.reserve(100); // Reserve space for 100 elements
+
+        // Insert key-value pairs into the unordered_map
+        myMap["apple"] = 5;
+        myMap["banana"] = 3;
+        myMap["cherry"] = 7;
+
+        // Access and print values using keys
+        std::string keyToFind = "banana";
+        // search the keys, if the key is found, find will return an iterator pointing to the location
+        if (myMap.find(keyToFind) != myMap.end()) {
+            std::cout << "Value for key '" << keyToFind << "': " << myMap[keyToFind] << std::endl;
+        } else {
+            std::cout << "Key '" << keyToFind << "' not found in the map." << std::endl;
+        }
+
+        // Iterate through the unordered_map
+        std::cout << "Contents of the unordered_map:" << std::endl;
+        for (const auto& pair : myMap) {
+            std::cout << "Key: " << pair.first << ", Value: " << pair.second << std::endl;
+        }        
+
+        std::size_t numBuckets = myMap.bucket_count();
+
+        // Calculate an estimate of unused buckets (not exact)
+        std::size_t unusedBuckets = numBuckets - myMap.size();
+
+        std::cout << "Current number of buckets: " << numBuckets << std::endl;
+        std::cout << "Estimate of unused buckets: " << unusedBuckets << std::endl;
+
+
+    }
+} // namespace std_unordered_map_example
+
+namespace StructWithCons {
+    int SomeFuncWithReturnInt() {
+        return 10;
+    }
+
+    struct SomeStruct {
+        int test;
+
+        SomeStruct() : test(SomeFuncWithReturnInt()) {}
+    };
+
+    int main2() {
+        SomeStruct some_struct;
+        std::cout << "a.test = " << some_struct.test << std::endl; // Output: a.test = 10
+        return 0;
+    }
+}
+
 int main(int argc, char *argv[]) {
 #ifdef VISITOR_PATTERN_EXAMPLE
     // Create shapes
@@ -410,59 +544,64 @@ int main(int argc, char *argv[]) {
 
     // std::optional, std::nullopt
     // stdOptional();
-    
 
-    
+    // struct with constructor inside
+    // auto a = StructWithCons::main2();
+
+    // std::unordered_map
+    std_unordered_map_example::runExample_1();
+    std_unordered_map_example::runExample_2();    
+
 #endif
 
 #ifdef LYRA_EXAMPLE_3
 
-    // std::string mode;
-    // bool aaOneTime = false;
-    // bool bbOneTime = false;
-    // bool bbService = false;
+    std::string mode;
+    bool aaOneTime = false;
+    bool bbOneTime = false;
+    bool bbService = false;
 
-    // // Define the command line parser using Lyra
-    // auto cli = lyra::cli();
+    // Define the command line parser using Lyra
+    auto cli = lyra::cli();
 
-    // // Define the "mode" flag with two possible values: "aa" and "bb"
-    // cli |= lyra::opt(mode, "mode")["--mode"]
-    //     ("Select mode: aa or bb")
-    //     .required();
+    // Define the "mode" flag with two possible values: "aa" and "bb"
+    cli |= lyra::opt(mode, "mode")["--mode"]
+        ("Select mode: aa or bb")
+        .required();
 
-    // // Define options based on the selected mode
-    // cli |= lyra::opt(aaOneTime)["--aa_one_time"]
-    //     ("Enable aa_one_time flag");
+    // Define options based on the selected mode
+    cli |= lyra::opt(aaOneTime)["--aa_one_time"]
+        ("Enable aa_one_time flag");
 
-    // cli |= lyra::opt(bbOneTime)["--bb_one_time"]
-    //     ("Enable bb_one_time flag");
+    cli |= lyra::opt(bbOneTime)["--bb_one_time"]
+        ("Enable bb_one_time flag");
 
-    // cli |= lyra::opt(bbService)["--bb_service"]
-    //     ("Enable bb_service flag");
+    cli |= lyra::opt(bbService)["--bb_service"]
+        ("Enable bb_service flag");
 
-    // // Parse the command line arguments
-    // auto result = cli.parse({argc, argv});
+    // Parse the command line arguments
+    auto result = cli.parse({argc, argv});
 
-    // // Check for errors or display help
-    // if (!result) {
-    //     std::cerr << "Error in command line: " << result.errorMessage() << std::endl;
-    //     std::cerr << cli << std::endl; // Display help
-    //     return 1;
-    // }
+    // Check for errors or display help
+    if (!result) {
+        std::cerr << "Error in command line: " << result.errorMessage() << std::endl;
+        std::cerr << cli << std::endl; // Display help
+        return 1;
+    }
 
-    // // Check the selected mode and print options accordingly
-    // if (mode == "aa") {
-    //     std::cout << "Mode: aa" << std::endl;
-    //     std::cout << "aa_one_time: " << aaOneTime << std::endl;
-    // } else if (mode == "bb") {
-    //     std::cout << "Mode: bb" << std::endl;
-    //     if (bbOneTime == bbService) {
-    //         std::cerr << "Error: bb_one_time and bb_service cannot be enabled at the same time" << std::endl;
-    //         return 1;
-    //     }
-    //     std::cout << "bb_one_time: " << bbOneTime << std::endl;
-    //     std::cout << "bb_service: " << bbService << std::endl;
-    // }
+    // Check the selected mode and print options accordingly
+    if (mode == "aa") {
+        std::cout << "Mode: aa" << std::endl;
+        std::cout << "aa_one_time: " << aaOneTime << std::endl;
+    } else if (mode == "bb") {
+        std::cout << "Mode: bb" << std::endl;
+        if (bbOneTime == bbService) {
+            std::cerr << "Error: bb_one_time and bb_service cannot be enabled at the same time" << std::endl;
+            return 1;
+        }
+        std::cout << "bb_one_time: " << bbOneTime << std::endl;
+        std::cout << "bb_service: " << bbService << std::endl;
+    }
 
 #endif
 
