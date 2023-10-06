@@ -25,9 +25,16 @@
 // MACROS
 #define PRINT_STR(x) std::cout << x << std::endl
 #define PRINT_FUNC_NAME() \
-    std::cout << "---------------------" << std::endl \
-              << "FUNCTION: " << __func__ << "()" << std::endl \
-              << "---------------------" << std::endl
+    do { \
+        for (std::size_t i = 0; i < sizeof(__func__) - 1; ++i) { \
+            std::cout << "-"; \
+        } \
+        std::cout << "\n" << __func__ << std::endl; \
+        for (std::size_t i = 0; i < sizeof(__func__) - 1; ++i) { \
+            std::cout << "-"; \
+        } \
+        std::cout << std::endl; \
+    } while (0)
 
 #ifdef LYRA_EXAMPLE_2
 // Run a process, sub-command data.
@@ -470,8 +477,20 @@ namespace std_unordered_map_example {
 
         std::cout << "Current number of buckets: " << numBuckets << std::endl;
         std::cout << "Estimate of unused buckets: " << unusedBuckets << std::endl;
+    }
 
+    void runExample_3() {
+        PRINT_FUNC_NAME();
+        std::unordered_map<std::string, int> myMap;
 
+        auto res1 = myMap.insert({"apple", 5});
+        auto res2 = myMap.try_emplace("banana", 3);
+        if (res1.second) {
+            std::cout << "Value for key '" << res1.first->first << "': " << res1.first->second << std::endl;
+        }
+        if (res2.second) {
+            std::cout << "Value for key '" << res2.first->first << "': " << res2.first->second << std::endl;
+        }
     }
 } // namespace std_unordered_map_example
 
@@ -550,7 +569,8 @@ int main(int argc, char *argv[]) {
 
     // std::unordered_map
     std_unordered_map_example::runExample_1();
-    std_unordered_map_example::runExample_2();    
+    std_unordered_map_example::runExample_2();
+    std_unordered_map_example::runExample_3();
 
 #endif
 
