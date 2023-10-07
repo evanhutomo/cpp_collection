@@ -1,5 +1,6 @@
 // HEADERS
 #include <iostream>
+#include <csignal>
 #include <memory>
 #include <stdlib.h>
 #include <unistd.h>
@@ -12,6 +13,9 @@
 #include <deque>
 #include <locale>
 #include <codecvt>
+#include <tuple>
+#include <future>
+#include <thread>
 // #include <unordered_set>
 #include "../inc/sambel.h"
 #include "../inc/lat1.h"
@@ -838,6 +842,78 @@ namespace std_2 {
         std::wcout << L"Converted Wide String: " << convertedWideStr << std::endl;
     }
 
+    void stdTuple() {       
+        PRINT_FUNC_NAME(); 
+        auto result = []() {
+            return std::make_tuple(42, 3.14159, "Hello");
+        };
+
+        // Invoke the lambda to get the tuple
+        auto tupleResult = result();
+
+        int intValue = std::get<0>(tupleResult);
+        double doubleValue = std::get<1>(tupleResult);
+        std::string stringValue = std::get<2>(tupleResult);
+
+        std::cout << "Int: " << intValue << ", Double: " << doubleValue << ", String: " << stringValue << std::endl;
+    }
+
+    void stdFuture() {
+        PRINT_FUNC_NAME();        
+        std::future<int> result = std::async([]() {
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+            return 42;
+        });
+        std::cout << "Waiting for the result..." << std::endl;
+        int value = result.get();
+        std::cout << "Result: " << value << std::endl;        
+    }
+
+    void stdMakeMoveIterator() {
+        PRINT_FUNC_NAME();
+        std::vector<std::string> source = {"apple", "banana", "cherry"};
+        std::vector<std::string> target;
+
+        // Use std::make_move_iterator to create move iterators
+        auto start = std::make_move_iterator(source.begin());
+        auto end = std::make_move_iterator(source.end());
+        auto dest = std::back_inserter(target);
+
+        // Move elements from source to target using move iterators
+        std::move(start, end, dest);
+
+        // After the move, source is in a valid but unspecified state
+        for (const std::string& item : target) {
+            std::cout << item << " ";
+        }
+        std::cout << std::endl;
+    }
+
+    [[maybe_unused]]
+    void signal_callback_handler(int signum) {
+        std::cout << "Signal (" << signum << ") received." << std::endl;
+        // terminate the program
+        exit(signum); 
+    }
+
+    void stSignal_1() {
+        // std::signal(SIGINT, signal_callback_handler);
+        std::signal(SIGINT, [](int signum) {
+            std::cerr << "Signal (" << signum << ") received." << std::endl << std::flush;
+            exit(0);
+        });
+
+        std::cout << "Press Ctrl+C to trigger the SIGINT signal." << std::endl << std::flush;
+        int i = 0;
+        while (true) {
+            std::cout << "i = " << i << std::endl << std::flush;
+            sleep(1);
+            i++;
+        }
+    }
+    
+
+
 }
 
 int main(int argc, char *argv[]) {
@@ -915,16 +991,21 @@ int main(int argc, char *argv[]) {
     // std_2::countIf();
     // std_2::findIf();
     // std_2::anyOf();
-    std_2::anyOf_2();
-    std_2::stdAllOf();
-    std_2::stdCount();
-    std_2::stdCopy();
-    std_2::stdTransform();
-    std_2::stdPower();
+    // std_2::anyOf_2();
+    // std_2::stdAllOf();
+    // std_2::stdCount();
+    // std_2::stdCopy();
+    // std_2::stdTransform();
+    // std_2::stdPower();
+    // std_2::stdDeque();
+    // std_2::stdStringStream();
+    // std_2::stdWstringConvert();
+    // std_2::stdWstringConvert();
+    // std_2::stdTuple();
+    // std_2::stdFuture();
+    // std_2::stdMakeMoveIterator();
+    std_2::stSignal_1();
 
-    std_2::stdDeque();
-    std_2::stdStringStream();
-    std_2::stdWstringConvert();
 
 #endif
 

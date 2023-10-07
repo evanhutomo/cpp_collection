@@ -56,15 +56,13 @@ or just implement configs/ to .vscode/ directory.
 - [x] std::deque<T> -> is a sequence container that, like a vector (std::vector), supports random access to its elements.
 - [x] std::stringstream -> is a stream class to operate on strings.
 - [x] std::wstring_convert<T>
-
+- [x] std::tuple -> standard container that can hold multiple elements of different types. It's often used to return multiple values from a function. 
+- [x] std::future
+- [x] std::make_move_iterator
+- [x] std::signal(SIGINT, signal_callback_handler)
+- [ ] getopt
 - [ ] std::decay
 - [ ] std::declval
-- [ ] std::tuple
-- [ ] std::future
-- [ ] std::make_move_iterator
-- [ ] getopt
-- [ ] std::signal(SIGINT, signal_callback_handler)
-
 - [ ] std::enable_if_t<T> -> is a type trait that can be used to conditionally enable or disable template specializations.
 - [ ] std::ref<T>
 - [ ] std::lock_guard<std::mutex>
