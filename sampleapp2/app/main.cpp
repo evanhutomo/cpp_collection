@@ -9,6 +9,9 @@
 #include <unordered_map>
 #include <valarray>
 #include <type_traits>
+#include <deque>
+#include <locale>
+#include <codecvt>
 // #include <unordered_set>
 #include "../inc/sambel.h"
 #include "../inc/lat1.h"
@@ -802,7 +805,38 @@ namespace std_2 {
         std::cout << base << " raised to the power of " << exponent << " is " << result << std::endl;
     }
 
+    void stdDeque() {
+        PRINT_FUNC_NAME();
+        std::deque<int> deque;
+        deque.push_back(1);
+        deque.push_front(2);
+        deque.push_back(3);
+        std::cout << "Front: " << deque.front() << ", Back: " << deque.back() << std::endl; // Prints Front: 2, Back: 3
+    }
 
+    void stdStringStream() {
+        PRINT_FUNC_NAME();
+        int num = 42;
+        std::stringstream ss;
+
+        ss << "The answer is: " << num;
+
+        std::string result = ss.str();
+        std::cout << result << std::endl; // Prints "The answer is: 42"
+    }
+
+    void stdWstringConvert() {
+        PRINT_FUNC_NAME();
+        std::wstring wideStr = L"Hello, World!";
+        std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+
+        std::string narrowStr = converter.to_bytes(wideStr);
+        std::wstring convertedWideStr = converter.from_bytes(narrowStr);
+
+        // Convert narrow string to wide string and then print
+        std::wcout << L"Narrow String: " << std::wstring(narrowStr.begin(), narrowStr.end()) << std::endl;
+        std::wcout << L"Converted Wide String: " << convertedWideStr << std::endl;
+    }
 
 }
 
@@ -888,6 +922,9 @@ int main(int argc, char *argv[]) {
     std_2::stdTransform();
     std_2::stdPower();
 
+    std_2::stdDeque();
+    std_2::stdStringStream();
+    std_2::stdWstringConvert();
 
 #endif
 

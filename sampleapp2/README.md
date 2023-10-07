@@ -53,20 +53,22 @@ or just implement configs/ to .vscode/ directory.
 - [x] std::copy -> copies elements from one range to another.
 - [x] std::transform ->  applies a function to each element in a range and stores the results in another range.
 - [x] std::pow -> computes the power of a number.
-- [ ] std::enable_if_t<T>
-- [ ] std::deque<T>
-- [ ] std::stringstream
-- [ ] std::ref<T>
-- [ ] std::wstring_convert<T>
+- [x] std::deque<T> -> is a sequence container that, like a vector (std::vector), supports random access to its elements.
+- [x] std::stringstream -> is a stream class to operate on strings.
+- [x] std::wstring_convert<T>
+
 - [ ] std::decay
 - [ ] std::declval
 - [ ] std::tuple
 - [ ] std::future
-- [ ] std::lock_guard<std::mutex>
 - [ ] std::make_move_iterator
-- [ ] std::unordered_multimap<T>
 - [ ] getopt
 - [ ] std::signal(SIGINT, signal_callback_handler)
+
+- [ ] std::enable_if_t<T> -> is a type trait that can be used to conditionally enable or disable template specializations.
+- [ ] std::ref<T>
+- [ ] std::lock_guard<std::mutex>
+- [ ] std::unordered_multimap<T>
 
 ## add submodules
 - [x] NumCpp
