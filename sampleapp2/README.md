@@ -40,32 +40,33 @@ or just implement configs/ to .vscode/ directory.
 - [x] std::map<std::wstring, int>::const_iterator 
 - [x] std::array<T>
 - [x] std::valarray<T>
-- [ ] std::unordered_multimap<T>
+- [x] std::getline -> get one line on std::ifstream
+- [x] std::wstring
+- [x] std::count_if
+- [x] std::enable_if
+- [x] std::find_if
+- [x] std::any_of -> check if any element in a sequence (e.g., a container or a range) satisfies a given condition
+- [x] std::copy_if ->  copy elements from one range (e.g., a container or a range defined by two iterators) to another range based on a specified condition.
+- [x] std::back_inserter -> iterator adapter that is used in combination with algorithms like std::copy_if to insert elements at the end of a container
+- [x] std::all_of -> checks if all elements in a range satisfy a given condition.
+- [x] std::count -> counts the occurrences of a specific value in a range.
+- [x] std::copy -> copies elements from one range to another.
+- [x] std::transform ->  applies a function to each element in a range and stores the results in another range.
+- [x] std::pow -> 
+
 - [ ] std::deque<T>
 - [ ] std::stringstream
-- [ ] std::count_if
-- [ ] std::find_if
-- [ ] std::getline
 - [ ] getopt
 - [ ] std::lock_guard<std::mutex>
-- [ ] std::enable_if
 - [ ] std::enable_if_t<T>
 - [ ] std::decay
 - [ ] std::declval
 - [ ] std::tuple
 - [ ] std::wstring_convert<T>
-- [ ] std::wstring
-- [ ] std::any_of
 - [ ] std::make_move_iterator
 - [ ] std::future
-- [ ] std::all_of
+- [ ] std::unordered_multimap<T>
 - [ ] std::ref<T>
-	get
-	size
-- [ ] std::count
-- [ ] std::copy
-- [ ] std::transform
-- [ ] std::pow
 - [ ] std::signal(SIGINT, signal_callback_handler)
 
 ## add submodules
@@ -81,9 +82,21 @@ or just implement configs/ to .vscode/ directory.
 - [ ] builder
 - [ ] adapter
 
-## other
+## algorithm
 - [ ] hash function
 - [ ] linked list
+- [ ] binary tree
+- [ ] graph
+- [ ] stack
+- [ ] queue
+- [ ] heap
+- [ ] priority queue
+- [ ] sort
+- [ ] search
+- [ ] dynamic programming
+
+## other
+- [ ] predicate function
 
 ## Study case
 ```1.

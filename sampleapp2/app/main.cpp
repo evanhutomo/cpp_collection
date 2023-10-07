@@ -8,6 +8,7 @@
 #include <fstream>
 #include <unordered_map>
 #include <valarray>
+#include <type_traits>
 // #include <unordered_set>
 #include "../inc/sambel.h"
 #include "../inc/lat1.h"
@@ -613,8 +614,6 @@ namespace std_valarray_example {
         std::cout << "Min Value: " << minValue << std::endl;
         std::cout << "Max Value: " << maxValue << std::endl;        
     }
-
-
 }
 
 namespace StructWithCons {
@@ -633,6 +632,168 @@ namespace StructWithCons {
         std::cout << "a.test = " << some_struct.test << std::endl; // Output: a.test = 10
         return 0;
     }
+}
+
+namespace std_2 {
+    template <typename T>
+    typename std::enable_if<std::is_arithmetic<T>::value, void>::type
+    printSquare(T x) {
+        std::cout << "Square of " << x << " is " << x * x << std::endl;
+    }
+
+    void enableIf() {
+        PRINT_FUNC_NAME();
+        int num = 5;
+        double pi = 3.14;
+        std::string str = "adnajdbakdhb";
+        printSquare(num);
+        printSquare(pi);
+    }
+
+    void countIf() {
+        PRINT_FUNC_NAME();
+        std::vector<int> numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        int evenCount = std::count_if(numbers.begin(), numbers.end(), [](int x) { return x % 2 == 0; });
+        std::cout << "Number of even numbers: " << evenCount << std::endl;
+    }
+
+    void findIf() {
+        PRINT_FUNC_NAME();
+        // Create a vector of integers
+        std::vector<int> numbers = {1, 3, 5, 2, 7, 8, 9, 10};
+
+        int evenCount = 0; // Counter for even numbers found
+        std::vector<int>::iterator it = numbers.begin();
+
+        while (evenCount < 2 && it != numbers.end()) {
+            it = std::find_if(it, numbers.end(), [](int x) {return x % 2 == 0;}); // Find the next even number
+
+            if (it != numbers.end()) {
+                ++evenCount;
+                if (evenCount == 2) {
+                    std::cout << "Second even number found: " << *it << std::endl;
+                }
+                ++it; // Move to the next element to continue searching
+            }
+        }
+
+        if (evenCount < 2) {
+            std::cout << "Less than two even numbers found." << std::endl;
+        }
+    }
+
+    bool isGreaterThanThreshold(int num, int threshold) {
+        return num > threshold;
+    }
+
+    void anyOf() {
+        PRINT_FUNC_NAME();
+        std::vector<int> numbers = {1, 3, 5, 2, 7, 8, 9, 10};
+        int threshold = 6;
+        bool anyGreaterThanThreshold = std::any_of(numbers.begin(), numbers.end(), [threshold](int num) {
+            return isGreaterThanThreshold(num, threshold);
+        });
+
+        /* NOTE
+        complementary of lambda func below in function shape is
+            [threshold](int num) {
+                return isGreaterThanThreshold(num, threshold);
+            };
+        is
+
+        bool isGreaterThanThreshold(int num, int threshold) {
+            return num > threshold;
+        }
+        */
+
+        // check the result
+        if (anyGreaterThanThreshold) {
+            std::cout << "There is at least one number greater than " << threshold << std::endl;
+        } else {
+            std::cout << "There are no numbers greater than " << threshold << std::endl;
+        }
+    }
+
+    void anyOf_2() {
+        PRINT_FUNC_NAME();
+        // Create a vector of integers
+        std::vector<int> numbers = {1, 3, 5, 2, 7, 8, 9, 10};
+        
+        int threshold = 6; // Threshold value to check against
+
+        // Create a vector to collect values greater than the threshold
+        std::vector<int> greaterThanThreshold;
+
+        // Use std::copy_if with std::any_of to collect values greater than the threshold
+        std::copy_if(numbers.begin(), numbers.end(), std::back_inserter(greaterThanThreshold), 
+                    [threshold](int num) {
+                        return num > threshold;
+                    });
+
+        // Check if any values were collected
+        if (!greaterThanThreshold.empty()) {
+            std::cout << "Values greater than " << threshold << ": ";
+            for (int num : greaterThanThreshold) {
+                std::cout << num << " ";
+            }
+            std::cout << std::endl;
+        } else {
+            std::cout << "No values greater than " << threshold << " found." << std::endl;
+        }        
+    }
+
+    void stdAllOf() {
+        PRINT_FUNC_NAME();        
+        std::vector<int> numbers = {1, 2, 3, 4, 5};
+
+        bool allEven = std::all_of(numbers.begin(), numbers.end(), [](int num) {
+            return num % 2 == 0;
+        });
+
+        if (allEven) {
+            std::cout << "All numbers are even." << std::endl;
+        } else {
+            std::cout << "Not all numbers are even." << std::endl;
+        }        
+    }
+
+    void stdCount() {
+        PRINT_FUNC_NAME();
+        std::vector<int> numbers = {1, 2, 2, 3, 2, 4, 5};
+
+        int countTwos = std::count(numbers.begin(), numbers.end(), 2);
+
+        std::cout << "Number of twos: " << countTwos << std::endl;        
+    }
+
+    void stdCopy() {
+        PRINT_FUNC_NAME();        
+        std::vector<int> source = {1, 2, 3, 4, 5};
+        std::vector<int> target(source.size());
+
+        std::copy(source.begin(), source.end(), target.begin());
+
+        for (int num : target) {
+            std::cout << num << " ";
+        }
+        std::cout << std::endl;        
+    }
+
+    void stdTransform() {
+        PRINT_FUNC_NAME();        
+        std::vector<int> numbers = {1, 2, 3, 4, 5};
+        std::vector<int> squared(numbers.size());
+
+        std::transform(numbers.begin(), numbers.end(), squared.begin(), [](int num) {
+            return num * num;
+        });
+
+        for (int square : squared) {
+            std::cout << square << " ";
+        }
+        std::cout << std::endl;        
+    }
+
 }
 
 int main(int argc, char *argv[]) {
@@ -703,8 +864,18 @@ int main(int argc, char *argv[]) {
     // std_map_example::runExample_2();
 
     // std::valarray
-    std_valarray_example::runExample_1();
+    // std_valarray_example::runExample_1();
 
+    // std::enable_if
+    // std_2::enableIf();
+    // std_2::countIf();
+    // std_2::findIf();
+    // std_2::anyOf();
+    std_2::anyOf_2();
+    std_2::stdAllOf();
+    std_2::stdCount();
+    std_2::stdCopy();
+    std_2::stdTransform();
 #endif
 
 #ifdef LYRA_EXAMPLE_3
