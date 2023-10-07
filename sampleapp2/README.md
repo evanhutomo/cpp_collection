@@ -52,21 +52,20 @@ or just implement configs/ to .vscode/ directory.
 - [x] std::count -> counts the occurrences of a specific value in a range.
 - [x] std::copy -> copies elements from one range to another.
 - [x] std::transform ->  applies a function to each element in a range and stores the results in another range.
-- [x] std::pow -> 
-
+- [x] std::pow -> computes the power of a number.
+- [ ] std::enable_if_t<T>
 - [ ] std::deque<T>
 - [ ] std::stringstream
-- [ ] getopt
-- [ ] std::lock_guard<std::mutex>
-- [ ] std::enable_if_t<T>
+- [ ] std::ref<T>
+- [ ] std::wstring_convert<T>
 - [ ] std::decay
 - [ ] std::declval
 - [ ] std::tuple
-- [ ] std::wstring_convert<T>
-- [ ] std::make_move_iterator
 - [ ] std::future
+- [ ] std::lock_guard<std::mutex>
+- [ ] std::make_move_iterator
 - [ ] std::unordered_multimap<T>
-- [ ] std::ref<T>
+- [ ] getopt
 - [ ] std::signal(SIGINT, signal_callback_handler)
 
 ## add submodules

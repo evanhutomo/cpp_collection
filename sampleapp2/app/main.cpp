@@ -794,6 +794,16 @@ namespace std_2 {
         std::cout << std::endl;        
     }
 
+    void stdPower() {
+        PRINT_FUNC_NAME();
+        double base = 2.0;
+        double exponent = 3.0;
+        double result = std::pow(base, exponent);
+        std::cout << base << " raised to the power of " << exponent << " is " << result << std::endl;
+    }
+
+
+
 }
 
 int main(int argc, char *argv[]) {
@@ -876,6 +886,9 @@ int main(int argc, char *argv[]) {
     std_2::stdCount();
     std_2::stdCopy();
     std_2::stdTransform();
+    std_2::stdPower();
+
+
 #endif
 
 #ifdef LYRA_EXAMPLE_3
