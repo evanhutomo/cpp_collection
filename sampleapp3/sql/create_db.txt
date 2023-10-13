@@ -1,0 +1,10 @@
+# simple psql query command for creating a database and user of kotobakoe database
+
+psql -h 127.0.0.1 -p 5439 -U postgres -c "CREATE DATABASE kotobakoe_db;"
+psql -h 127.0.0.1 -p 5439 -U postgres -c "CREATE USER kotobakoe_usr;"
+psql -h 127.0.0.1 -p 5439 -U postgres -c "ALTER USER kotobakoe_usr WITH PASSWORD 'kotobakoe_pwd';"
+psql -h 127.0.0.1 -p 5439 -U kotobakoe_usr -d kotobakoe_db -W
+kotobakoe_pwd
+
+# insert into kanji_cards table
+INSERT INTO (kana, kanji, meaning, updated_date) VALUES ('にほんご', '日本語', 'Japanese language', CURRENT_DATE);
