@@ -8,3 +8,12 @@ kotobakoe_pwd
 
 # insert into kanji_cards table
 INSERT INTO (kana, kanji, meaning, updated_date) VALUES ('にほんご', '日本語', 'Japanese language', CURRENT_DATE);
+
+
+CREATE TABLE kotoba (
+    id serial PRIMARY KEY,
+    kanji varchar(255),
+    kana varchar(255),
+    description varchar(255),
+    updated_date DATE
+);

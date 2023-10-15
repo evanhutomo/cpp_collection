@@ -49,6 +49,8 @@ find_package(spdlog CONFIG REQUIRED)
 find_package(lyra CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(ftxui REQUIRED)
+find_package(PostgreSQL REQUIRED)
+find_package(libpqxx CONFIG REQUIRED)
 
 # INCLUDE
 include_directories(
@@ -67,6 +69,7 @@ include(cmake/kotobakoe_message.cmake)
 # EXECUTABLE FILE
 set(SOURCES 
     src/main.cpp
+    src/db.cpp
 )
 add_executable(${PROJ_NAME}
     ${SOURCES}
@@ -86,6 +89,8 @@ target_link_libraries(${PROJ_NAME}
     PUBLIC spdlog::spdlog spdlog::spdlog_header_only
     PUBLIC bfg::lyra
     PUBLIC nlohmann_json nlohmann_json::nlohmann_json
+    PUBLIC libpqxx::pqxx pq Threads::Threads
+    PUBLIC PostgreSQL::PostgreSQL    
 )
 
 # COMPILE OPTIONS
