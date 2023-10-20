@@ -78,5 +78,7 @@ namespace LATCPP::BASIC1 {
         for (const auto& pair : myMap) {
             std::wcout << L"Key: " << pair.first << L", Value: " << pair.second << std::endl;
         }
+
+        getWindowsPath();
     }
 }

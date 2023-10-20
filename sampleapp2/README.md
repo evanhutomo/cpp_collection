@@ -22,6 +22,8 @@ or just implement configs/ to .vscode/ directory.
 - [x] std::unique_ptr<T>
 - [x] std::make_unique<T> 
 - [x] std::thread
+  joinable()
+  join()
 - [x] std::this_thread::sleep_for
 - [x] std::string::find_first_of
 - [x] std::string::npos
@@ -67,10 +69,30 @@ or just implement configs/ to .vscode/ directory.
 - [ ] std::ref<T>
 - [ ] std::lock_guard<std::mutex>
 - [ ] std::unordered_multimap<T>
+- [ ] casting
+    - [ ] static_cast
+    - [ ] dynamic_cast
+    - [ ] reinterpret_cast
+    - [ ] const_cast
+- [ ] [[nodiscard]]
+- [ ] [[deprecated]]
+- [ ] [[noreturn]]
+- [ ] [[carries_dependency]]
+- [ ] [[maybe_unused]]
+- [ ] std::atomic_bool
+- [ ] std::queue<T>
+- [ ] std::condition_variable
+- [ ] std::unique_lock
+- [ ] signalr::
+      hub_connection
+      value
+      connection_state
+
+
 
 ## add submodules
 - [x] NumCpp
-- [ ] observable
+- [x] observable
 - [ ] nlohmann_json
 
 ## add design pattern
@@ -138,5 +160,30 @@ namespace std {
             return std::hash<std::string>()(key.getName()) ^ std::hash<int>()(key.getId());
         }
     };
+}
+```
+
+```6. make an alias
+class MyClass {
+public:
+    int data;
+
+    MyClass(int value) : data(value) {}
+};
+
+int main() {
+    MyClass myObject(42);  // Create an object of MyClass with a data value of 42.
+
+    MyClass &aliasObject = myObject;  // Create a reference named aliasObject to myObject.
+
+    std::cout << "Original: " << myObject.data << std::endl;    // Output: Original: 42
+    std::cout << "Alias: " << aliasObject.data << std::endl;    // Output: Alias: 42
+
+    aliasObject.data = 100;  // Modifying through the alias also affects the original object.
+
+    std::cout << "Modified: " << myObject.data << std::endl;   // Output: Modified: 100
+    std::cout << "Alias: " << aliasObject.data << std::endl;   // Output: Alias: 100
+
+    return 0;
 }
 ```

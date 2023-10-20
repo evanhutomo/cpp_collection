@@ -286,3 +286,17 @@
 キッチン-きっちん-kitchen
 やり合い-やりあい-fight
 すっかり-すっかり-completely
+古本-ふるほん-secondhand book
+周辺-しゅうへん-surrounding area
+焼く-やく-to bake
+店舗-てんぽ-shop, store
+静かな-しずかな-quiet
+静やかな-しずやかな-quiet
+雰囲気-ふんいき-atmosphere
+味わう-あじわう-to taste
+ゆったり-ゆったり-comfortable, relaxed
+寛ぐ-くつろぐ-to relax
+過ごす-すごす-to spend(time)
+閲覧-えつらん-browsing
+是非-ぜひ-please, by all means
+巻末-かんまつ-end of a book

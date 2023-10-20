@@ -4,12 +4,27 @@ project(CPP_BOILERPLATE VERSION 0.0.1 LANGUAGES CXX)
 # --------------------------------------------------------------------------------
 #                                  Locate files
 # --------------------------------------------------------------------------------
+
+
+file(GLOB SOURCES_LAT "src/lat*.cpp")
+# OR
+# set(SOURCES 
+#   src/sambel.cpp
+#   src/lat1.cpp
+#   src/lat2.cpp
+#   src/lat3.cpp
+#   src/lat4.cpp  
+#   src/visitor_pattern.cpp  
+# )
+
 set(SOURCES 
   src/sambel.cpp
-  src/lat1.cpp
-  src/lat2.cpp
-  src/visitor_pattern.cpp  
+  src/visitor_pattern.cpp
+  ${SOURCES_LAT}  
 )
+
+
+message(STATUS "Variable value: ${PROJECT_SOURCE_DIR}")
 
 # std lib
 option(STD_EXAMPLE "Build standard library examples" ON)
@@ -24,11 +39,19 @@ if (VISITOR_PATTERN_EXAMPLE)
 endif()
 
 # Learn how to add examples and its option from roots
-option(NUMCPP_EXAMPLE "Build NumCpp examples" OFF)
-if (NUMCPP_EXAMPLE)
-  add_definitions(-DNUMCPP_EXAMPLE)
+# option(NUMCPP_EXAMPLE "Build NumCpp examples" ON)
+# if (NUMCPP_EXAMPLE)
+#   add_definitions(-DNUMCPP_EXAMPLE)
+#   add_subdirectory(submodules)
+#   set(NUMCPP_INCLUDE_DIR "submodules/NumCpp/include")
+# endif()
+
+# Learn how to add examples and its option from roots
+option(OBSERVABLE_EXAMPLE "Build NumCpp examples" ON)
+if (OBSERVABLE_EXAMPLE)
+  add_definitions(-DOBSERVABLE_EXAMPLE)
   add_subdirectory(submodules)
-  set(NUMCPP_INCLUDE_DIR "submodules/NumCpp/include")
+  set(NUMCPP_INCLUDE_DIR "submodules/observable/observable/include")
 endif()
 
 # option for demonstrate sample code
