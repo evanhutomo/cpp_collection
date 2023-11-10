@@ -117,6 +117,8 @@ or just implement configs/ to .vscode/ directory.
 - [ ] dynamic programming
 
 ## other
+- [x] rule of three
+- [ ] rule of five
 - [ ] predicate function
 
 ## Study case

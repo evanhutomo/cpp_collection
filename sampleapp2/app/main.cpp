@@ -20,6 +20,7 @@
 #include "../inc/sambel.h"
 #include "../inc/lat1.h"
 #include "../inc/lat2.h"
+#include "../inc/lat5.h"
 #include <pqxx/pqxx>
 #include <spdlog/spdlog.h>
 #include <lyra/lyra.hpp>

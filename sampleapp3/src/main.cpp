@@ -5,12 +5,16 @@
 #include <vector>
 #include <memory>
 
+// External module
 #include <lyra/lyra.hpp>
 #include <nlohmann/json.hpp>
 
+// Internal module
 #include "data.h"
 #include "db.h"
+#include "err_enum.h"
 
+// FTXUI
 #include "ftxui/component/captured_mouse.hpp"
 #include "ftxui/component/component.hpp"
 #include "ftxui/component/component_base.hpp"
@@ -18,6 +22,8 @@
 #include "ftxui/component/screen_interactive.hpp"
 #include "ftxui/dom/elements.hpp"
 #include "ftxui/util/ref.hpp"
+
+
 
 namespace ftxui{
     void createComponent() {
@@ -53,6 +59,91 @@ namespace ftxui{
     }
 }
 
+namespace KOTOBAKOE::DB {
+    int insertKotobaVector(std::vector<KOTOBAKOE::DATA::Kotoba> &vec_kanji_card) {
+        try {
+            // Set your PostgreSQL connection string.
+            // std::string connection_string = "dbname=belugabox_qa user=postgres password=postgres host=127.0.0.1 port=5439";
+            std::string connection_string = "dbname=kotobakoe_db user=kotobakoe_usr password=kotobakoe_pwd host=127.0.0.1 port=5439";
+
+            // Establish a connection to the PostgreSQL database.
+            pqxx::connection connection(connection_string);
+
+            if (connection.is_open()) {
+                std::cout << "Connected to the database successfully." << std::endl;
+
+                // Insert data into a table.
+                std::string table_name = "kotoba";  // Replace with your actual table name.
+
+                // Define the SQL query for insertion.
+                std::string select_query = "SELECT * FROM " + table_name + ";";
+
+                std::vector<KOTOBAKOE::DATA::Kotoba> data;
+
+                // Prepare a transaction for the insertion.
+                pqxx::work txn(connection);
+
+                pqxx::result result = txn.exec(select_query);
+
+                // Process the query result and populate the vector.
+                for (const auto& row : result) {
+                    KOTOBAKOE::DATA::Kotoba item;
+                    item.id = row["id"].as<int>();
+                    item.kanji = row["kanji"].as<std::string>();
+                    item.kana = row["kana"].as<std::string>();                
+                    item.description = row["description"].as<std::string>();
+                    data.push_back(item);
+                }
+
+                // Commit the transaction.
+                txn.commit();
+
+                // You now have 'data' populated with the retrieved records.
+                for (const auto& item : data) {
+                    std::cout << "ID: " << item.id << ", Kanji: " << item.kanji << std::endl;
+                }
+
+                // compare vec_kanji_card value and data、if not equal, insert data to db
+                for (const auto& item : vec_kanji_card) {
+                    bool isExist = false;
+                    for (const auto& item2 : data) {
+                        std::cout << "item.kanji: " << item.kanji << ", item2.kanji: " << item2.kanji << std::endl;
+                        if (item.kanji == item2.kanji) {
+                            isExist = true;
+                            break;
+                        }
+                    }
+                    if (!isExist) {
+                        std::cout << "insert data to db" << std::endl;
+                        pqxx::work txn(connection);
+                        std::string insert_query = "INSERT INTO " + table_name + " (kana, kanji, description, updated_date) VALUES ('"+ item.kana +"', '"+ item.kanji +"', '"+ item.description +"', CURRENT_DATE)";
+                        txn.exec(insert_query);
+                        txn.commit();
+                    }
+                }
+
+                // Execute the insertion query.
+                // txn.exec_params(insert_query);
+
+                // // Commit the transaction to save the changes.
+                // txn.commit();
+
+                std::cout << "Data inserted successfully." << std::endl;            
+
+                // Don't need to close the connection explicitly; it will be closed when the 'connection' object goes out of scope.
+            } else {
+                std::cerr << "Failed to connect to the database." << std::endl;
+
+                return 1;
+            }
+        } catch (const std::exception& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+            return 1;
+        }
+        return 0;
+    } 
+}
+
 namespace KOTOBAKOE::MAIN {
 int argParse(int argc, const char** argv) {
     // Where we read in the argument value:
@@ -83,7 +174,7 @@ int argParse(int argc, const char** argv) {
 std::vector<KOTOBAKOE::DATA::Kotoba> readKotobaFromTxt() {
     std::vector<KOTOBAKOE::DATA::Kotoba> dataVector;
 
-    /* raed and parse */
+    /* read and parse */
     std::ifstream file("data.txt");
     if (file.is_open()) {
         std::string line;
@@ -105,10 +196,10 @@ std::vector<KOTOBAKOE::DATA::Kotoba> readKotobaFromTxt() {
     return dataVector;
 }
 
-int readAndParse() {
+int readAndParseToJSON() {
     std::vector<KOTOBAKOE::DATA::Kotoba> dataVector;
 
-    /* raed and parse */
+    /* read and parse */
     std::ifstream file("data.txt");
     if (file.is_open()) {
         std::string line;
@@ -150,16 +241,15 @@ int readAndParse() {
     return 0;
 }
 
-} // namespace KOTOBAKOE::MAIN
-
-int main(int argc, const char** argv) {
-    KOTOBAKOE::MAIN::argParse(argc, argv);
-    auto vec_kanji_card = KOTOBAKOE::MAIN::readKotobaFromTxt();
-    if(!vec_kanji_card.empty()) {
-        try
-        {
-            for (const auto& item : vec_kanji_card) {
-                std::cout << "item.kanji: " << item.kanji << std::endl;
+void printKotobaVector(const std::vector<KOTOBAKOE::DATA::Kotoba>& dataVector) {
+    if (!dataVector.empty()) {
+        try{
+            for (const auto& entry : dataVector) {
+                std::cout << "ID: " << entry.id << std::endl;
+                std::cout << "Kanji: " << entry.kanji << std::endl;
+                std::cout << "Kana: " << entry.kana << std::endl;
+                std::cout << "Description: " << entry.description << std::endl;
+                std::cout << std::endl;
             }
         }
         catch(const std::exception& e)
@@ -167,93 +257,17 @@ int main(int argc, const char** argv) {
             std::cerr << "Error while iterating over vec_kanji_card: " << e.what() << std::endl;
         }
     } else {
-        std::cerr << "vec_kanji_card is empty or null." << std::endl;
+        std::cerr << "vec_kanji_card is empty or null." << std::endl;        
     }
+} // namespace KOTOBAKOE::MAIN
 
-
-    // KOTOBAKOE::MAIN::readAndParse();
+int main(int argc, const char** argv) {
+    KOTOBAKOE::MAIN::argParse(argc, argv);
+    auto vec_kanji_card = KOTOBAKOE::MAIN::readKotobaFromTxt();
+    KOTOBAKOE::MAIN::printKotobaVector(vec_kanji_card);
 
 #if 1
-    try {
-        // Set your PostgreSQL connection string.
-        // std::string connection_string = "dbname=belugabox_qa user=postgres password=postgres host=127.0.0.1 port=5439";
-        std::string connection_string = "dbname=kotobakoe_db user=kotobakoe_usr password=kotobakoe_pwd host=127.0.0.1 port=5439";
 
-        // Establish a connection to the PostgreSQL database.
-        pqxx::connection connection(connection_string);
-
-        if (connection.is_open()) {
-            std::cout << "Connected to the database successfully." << std::endl;
-
-            // Insert data into a table.
-            std::string table_name = "kotoba";  // Replace with your actual table name.
-
-            // Define the SQL query for insertion.
-            std::string select_query = "SELECT * FROM " + table_name + ";";
-
-            std::vector<KOTOBAKOE::DATA::Kotoba> data;
-
-            // Prepare a transaction for the insertion.
-            pqxx::work txn(connection);
-
-            pqxx::result result = txn.exec(select_query);
-
-            // Process the query result and populate the vector.
-            for (const auto& row : result) {
-                KOTOBAKOE::DATA::Kotoba item;
-                item.id = row["id"].as<int>();
-                item.kanji = row["kanji"].as<std::string>();
-                item.kana = row["kana"].as<std::string>();                
-                item.description = row["description"].as<std::string>();
-                data.push_back(item);
-            }
-
-            // Commit the transaction.
-            txn.commit();
-
-            // You now have 'data' populated with the retrieved records.
-            for (const auto& item : data) {
-                std::cout << "ID: " << item.id << ", Kanji: " << item.kanji << std::endl;
-            }
-
-            // compare vec_kanji_card value and data、if not equal, insert data to db
-            for (const auto& item : vec_kanji_card) {
-                bool isExist = false;
-                for (const auto& item2 : data) {
-                    std::cout << "item.kanji: " << item.kanji << ", item2.kanji: " << item2.kanji << std::endl;
-                    if (item.kanji == item2.kanji) {
-                        isExist = true;
-                        break;
-                    }
-                }
-                if (!isExist) {
-                    std::cout << "insert data to db" << std::endl;
-                    pqxx::work txn(connection);
-                    std::string insert_query = "INSERT INTO " + table_name + " (kana, kanji, description, updated_date) VALUES ('"+ item.kana +"', '"+ item.kanji +"', '"+ item.description +"', CURRENT_DATE)";
-                    txn.exec(insert_query);
-                    txn.commit();
-                }
-            }
-
-            
-
-            // Execute the insertion query.
-            // txn.exec_params(insert_query);
-
-            // // Commit the transaction to save the changes.
-            // txn.commit();
-
-            std::cout << "Data inserted successfully." << std::endl;            
-
-            // Don't need to close the connection explicitly; it will be closed when the 'connection' object goes out of scope.
-        } else {
-            std::cerr << "Failed to connect to the database." << std::endl;
-            return 1;
-        }
-    } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-        return 1;
-    }
 #endif
     return 0;
 }
